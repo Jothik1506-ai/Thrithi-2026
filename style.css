@@ -273,9 +273,7 @@ body {
 
 /* Register Button Container */
 .register-container {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+    display: block;
 }
 
 /* Register Button */
@@ -1205,37 +1203,6 @@ body {
     }
 }
 
-/* ===================== RESPONSIVE ===================== */
-@media (max-width: 768px) {
-    .about-stats {
-        gap: 1rem;
-    }
-
-    .stat-box {
-        padding: 1.5rem 1.5rem;
-        min-width: 100px;
-    }
-
-    .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .gallery-item--large {
-        grid-column: span 2;
-        grid-row: span 1;
-    }
-}
-
-@media (max-width: 480px) {
-    .gallery-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .gallery-item--large,
-    .gallery-item--wide {
-        grid-column: span 1;
-    }
-}
 
 /* ===================== SMOOTH EXPERIENCE ENHANCEMENTS ===================== */
 
@@ -1250,15 +1217,20 @@ body {
     will-change: transform;
 }
 
-/* Smooth register button reveal via class toggle instead of abrupt display:block */
-#register-btn-container {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+/* iOS Safari does not support background-attachment:fixed — fall back to scroll on mobile
+   to prevent blank/broken backgrounds and compositing jank on Android */
+@media (max-width: 768px) {
+    .law-final-section,
+    .fst-final-section,
+    .ibs-final-section,
+    .soc-final-section,
+    .arch-final-section {
+        background-attachment: scroll;
+    }
 }
 
-#register-btn-container.btn-visible {
+/* Register button — visible by default (countdown animation is disabled) */
+#register-btn-container {
     opacity: 1;
     transform: translateY(0);
 }
@@ -1266,4 +1238,12 @@ body {
 /* Hint browser to promote time boxes to own layer during hover */
 .time-box {
     will-change: transform;
+}
+
+/* On narrow phones the active-state side-nav label overflows into the content area.
+   Suppress label text — keep the dot active indicator fully intact. */
+@media (max-width: 576px) {
+    .side-nav a::before {
+        display: none;
+    }
 }
