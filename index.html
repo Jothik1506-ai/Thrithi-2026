@@ -331,8 +331,8 @@
     </footer>
 
     <!-- Registration Modal -->
-    <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="registrationModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header border-0">
@@ -349,26 +349,28 @@
                                 <div class="registration-section">
                                     <h6 class="section-title">Student Registration</h6>
 
-                                    <input type="text" class="form-control reg-input" placeholder="Full Name*" required>
-                                    <input type="tel" class="form-control reg-input" placeholder="Mobile No*" required>
-                                    <input type="email" class="form-control reg-input" placeholder="Email ID*" required>
-                                    <input type="text" class="form-control reg-input" placeholder="Institution Name*"
+                                    <input type="text" class="form-control reg-input" id="fullName" placeholder="Full Name*" required>
+                                    <input type="tel" class="form-control reg-input" id="phone" placeholder="Mobile No*" required>
+                                    <input type="email" class="form-control reg-input" id="email" placeholder="Email ID*" required>
+                                    <input type="text" class="form-control reg-input" id="college" placeholder="Institution Name*"
                                         required>
 
                                     <div class="file-upload-group mt-3">
                                         <label class="upload-label">Upload College ID Card (jpg/jpeg/heic)*:</label>
                                         <div class="custom-file-input-wrapper">
-                                            <input type="file" class="form-control-file" id="collegeIdUpload"
-                                                accept=".jpg,.jpeg,.heic" required>
+                                            <input type="file" class="form-control-file" id="collegeID"
+                                                accept="image/jpeg, image/jpg, image/heic" required>
                                         </div>
+                                        <div id="collegeFileContainer"></div>
                                     </div>
 
                                     <div class="file-upload-group mt-3">
                                         <label class="upload-label">Upload Aadhaar Card (jpg/jpeg/heic)*:</label>
                                         <div class="custom-file-input-wrapper">
-                                            <input type="file" class="form-control-file" id="aadhaarUpload"
-                                                accept=".jpg,.jpeg,.heic" required>
+                                            <input type="file" class="form-control-file" id="aadhaarID"
+                                                accept="image/jpeg, image/jpg, image/heic" required>
                                         </div>
+                                        <div id="aadhaarFileContainer"></div>
                                     </div>
                                 </div>
                             </div>
@@ -380,22 +382,19 @@
 
                                     <div class="form-group">
                                         <label class="dropdown-label">Select the School*:</label>
-                                        <select class="form-control reg-select" required>
-                                            <option value="" disabled selected>-- Select School --</option>
-                                            <option value="icfaitech">IcfaiTech</option>
-                                            <option value="ibs">IBS</option>
-                                            <option value="law">ICFAI Law School</option>
-                                            <option value="architecture">ICFAI School of Architecture</option>
-                                            <option value="social-sciences">ICFAI School of Social Sciences</option>
+                                        <select class="form-control reg-select" id="schoolSelect" required>
+                                            <option value="">-- Select School --</option>
+                                            <option value="tech">IcfaiTech Events</option>
+                                            <option value="ibs">IBS Events</option>
+                                            <option value="law">ICFAI Law School Events</option>
+                                            <option value="socialScience">Faculty of Social Science Events</option>
+                                            <option value="architecture">ICFAI Architecture Events</option>
                                         </select>
                                     </div>
 
-                                    <div class="form-group mb-4">
+                                    <div class="form-group flex-grow-1">
                                         <label class="dropdown-label">Select the Events*:</label>
-                                        <!-- Add event selection logic or dropdowns here as needed -->
-                                        <select class="form-control reg-select mb-2" required>
-                                            <option value="" disabled selected>-- Select Event --</option>
-                                        </select>
+                                        <div id="eventCheckboxes" class="event-checkboxes-container"></div>
                                     </div>
 
                                     <div class="total-amount mb-4">
@@ -413,6 +412,8 @@
         </div>
     </div>
 
+    <div id="alertContainer" class="alert-container"></div>
+ 
     <!-- jQuery and Bootstrap JS via CDN -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
