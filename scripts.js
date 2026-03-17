@@ -140,16 +140,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnBackToEvents = document.getElementById("btnBackToEvents");
     const registrationForm = document.getElementById("registrationForm");
 
+    // Accessibility fix: blur any focused element inside the modal before Bootstrap
+    // sets aria-hidden="true" on it — prevents "aria-hidden on focused element" warning.
+    $('#eventModal').on('hide.bs.modal', function () {
+        if (document.activeElement && this.contains(document.activeElement)) {
+            document.activeElement.blur();
+        }
+    });
+
     // 1. Open Modal via "Events" Buttons
     document.querySelectorAll('[data-target="#eventModal"]').forEach(btn => {
         btn.addEventListener('click', function() {
             currentSchool = this.getAttribute('data-school');
             eventModalTitle.textContent = "Select Events - " + (schoolTitles[currentSchool] || "");
-            
+
             // Reset to Step 1
             step1Events.style.display = "block";
             step2Registration.style.display = "none";
-            
+
+            // Reset submit button state so repeat opens are not stuck disabled
+            if (registrationForm) {
+                const submitBtn = registrationForm.querySelector("button[type='submit']");
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = "Submit &amp; Pay";
+                }
+            }
+
             // Render Events for the specific school
             renderEvents(currentSchool);
         });
@@ -231,30 +248,46 @@ document.addEventListener("DOMContentLoaded", () => {
         registrationForm.addEventListener("submit", function (e) {
             e.preventDefault();
 
-            const sumText = step2TotalAmount.textContent;
-            const submitButton = registrationForm.querySelector("button[type='submit']");
+            // --- Phone validation (Fix #5) ---
+            const phone = document.getElementById('phone').value.trim();
+            if (!/^[6-9]\d{9}$/.test(phone)) {
+                showAlert("⚠️ Please enter a valid 10-digit Indian mobile number.", "danger");
+                return;
+            }
 
+            // --- Recalculate total from checked boxes — not from DOM text (Fix #3) ---
+            let total = 0;
+            document.querySelectorAll(".event-checkbox:checked").forEach(cb => {
+                total += parseInt(cb.value, 10);
+            });
+            const sumText = `₹${total}`;
+
+            const submitButton = registrationForm.querySelector("button[type='submit']");
             submitButton.disabled = true;
-            const originalText = submitButton.innerHTML;
             submitButton.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Processing...`;
 
-            // Simulate payment process
+            // --- Payment gateway call goes here (Fix #8 structure) ---
+            // Replace the setTimeout below with your actual gateway call (e.g. Razorpay).
+            // On success → run the success block. On failure → run the failure block.
             setTimeout(() => {
-                showAlert(`✅ Registration Successful! Proceeding to Payment with amount: <strong>${sumText}</strong>`, "success");
-                submitButton.disabled = false;
-                submitButton.innerHTML = originalText;
+                const paymentSuccess = true; // Replace with actual gateway response
 
-                // Close the modal
-                $('#eventModal').modal('hide');
-                
-                // Reset the registration form fields
-                registrationForm.reset();
-                // Note: event checkboxes are outside this form; they are rebuilt
-                // by renderEvents() each time the modal reopens — no manual reset needed.
-                
-                // Also reset file upload UI bits
-                window.removeIdFile('collegeID', 'collegeFileContainer');
-                window.removeIdFile('aadhaarID', 'aadhaarFileContainer');
+                if (paymentSuccess) {
+                    // --- Success path ---
+                    showAlert(`✅ Registration Successful! Amount: <strong>${sumText}</strong>`, "success");
+                    // Button stays disabled after success — re-enabled on next modal open (Fix #7)
+                    submitButton.innerHTML = "Submit &amp; Pay";
+                    $('#eventModal').modal('hide');
+                    registrationForm.reset();
+                    // Note: event checkboxes are rebuilt by renderEvents() on next modal open
+                    window.removeIdFile('collegeID', 'collegeFileContainer');
+                    window.removeIdFile('aadhaarID', 'aadhaarFileContainer');
+                } else {
+                    // --- Failure path (Fix #8) ---
+                    showAlert("❌ Payment failed. Please try again.", "danger");
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = "Submit &amp; Pay";
+                }
             }, 2000);
         });
     }
@@ -267,19 +300,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
         input.addEventListener("change", function () {
             const file = this.files[0];
-            if (file) {
-                // Use data-* attributes instead of inline onclick to avoid global namespace pollution
-                container.innerHTML = `
-                    <div class="file-info-badge mt-2">
-                        <i class="fas fa-file-image mr-2"></i>
-                        <span>${file.name}</span>
-                        <i class="fas fa-times-circle remove-file-icon ml-2"
-                           style="cursor:pointer; color:#ff4444;"
-                           data-input-id="${inputId}"
-                           data-container-id="${containerId}"></i>
-                    </div>`;
-                showAlert(`📂 <strong>${file.name}</strong> uploaded successfully.`, "info");
+            if (!file) return;
+
+            // --- File size validation — max 5 MB (Fix #6) ---
+            const MAX_SIZE_MB = 5;
+            if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+                showAlert(`⚠️ File too large. Maximum allowed size is ${MAX_SIZE_MB}MB.`, "danger");
+                input.value = "";
+                return;
             }
+
+            // --- Build badge with DOM methods — prevents XSS from malicious file names (Fix #2) ---
+            container.innerHTML = "";
+            const badge = document.createElement('div');
+            badge.className = 'file-info-badge mt-2';
+
+            const fileIcon = document.createElement('i');
+            fileIcon.className = 'fas fa-file-image mr-2';
+
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = file.name; // textContent never parses HTML — XSS-safe
+
+            const removeIcon = document.createElement('i');
+            removeIcon.className = 'fas fa-times-circle remove-file-icon ml-2';
+            removeIcon.style.cssText = 'cursor:pointer; color:#ff4444;';
+            removeIcon.setAttribute('data-input-id', inputId);
+            removeIcon.setAttribute('data-container-id', containerId);
+
+            badge.appendChild(fileIcon);
+            badge.appendChild(nameSpan);
+            badge.appendChild(removeIcon);
+            container.appendChild(badge);
+
+            // Escape file name before inserting into alert HTML (Fix #2)
+            const safeName = file.name
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+            showAlert(`📂 <strong>${safeName}</strong> uploaded successfully.`, "info");
         });
     }
 

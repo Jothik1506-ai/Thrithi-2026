@@ -8,8 +8,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/4bac6d041c.js" crossorigin="anonymous"></script>
+    <!-- Google Fonts preconnect — reduces font load latency caused by @import in CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Font Awesome — async prevents render-blocking -->
+    <script src="https://kit.fontawesome.com/4bac6d041c.js" crossorigin="anonymous" async></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -29,7 +32,7 @@
                 <li><a href="#social-science" data-label="ICFAI School of Social Science"></a></li>
                 <li><a href="#architecture" data-label="ICFAI School of Architecture"></a></li>
                 <li><a href="#contact" data-label="Contact Us"></a></li>
-                <li><a href="THRITHI 2K26.pdf" target="_blank" data-label="Brochure"></a></li>
+                <li><a href="THRITHI 2K26.pdf" target="_blank" rel="noopener noreferrer" data-label="Brochure"></a></li>
             </ul>
         </nav>
 
@@ -47,51 +50,19 @@
                     <span class="typing-text M-Heading" id="typewriter"></span>
                     <span class="M-Heading">&gt;</span>
                 </div>
-                <!-- <h4 class="registrations-text mt-4 text-uppercase" id="reg-text">Registrations Opening Soon!</h4> -->
 
                 <!-- Registration Button -->
                 <div class="register-container mt-4" id="register-btn-container">
-                    <button class="btn register-btn" data-toggle="modal" data-target="#registrationModal">Register
-                        Now</button>
-                    <a href="THRITHI 2K26.pdf" target="_blank" class="btn register-btn ml-3">Brochure</a>
+                    <a href="THRITHI 2K26.pdf" target="_blank" rel="noopener noreferrer" class="btn register-btn ml-3">Brochure</a>
                 </div>
-
 
             </div>
-
-            <!-- Countdown Timer -->
-            <!-- <div class="countdown-container row justify-content-center mx-0 mt-5">
-                <div class="col-6 col-md-3 mb-3">
-                    <div class="time-box">
-                        <span class="time-value" id="days">00</span>
-                        <span class="time-label">Days</span>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3 mb-3">
-                    <div class="time-box">
-                        <span class="time-value" id="hours">00</span>
-                        <span class="time-label">Hours</span>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3 mb-3">
-                    <div class="time-box">
-                        <span class="time-value" id="minutes">00</span>
-                        <span class="time-label">Minutes</span>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3 mb-3">
-                    <div class="time-box">
-                        <span class="time-value" id="seconds">00</span>
-                        <span class="time-label">Seconds</span>
-                    </div>
-                </div>
-            </div> -->
 
             <!-- Footer / Contact Info -->
             <div class="footer-info mt-5">
                 <!-- <p>Stay tuned for more updates!</p> -->
                 <div class="social-links mt-3">
-                    <a href="https://www.instagram.com/thrithi.icfai" target="_blank" class="social-icon">
+                    <a href="https://www.instagram.com/thrithi.icfai" target="_blank" rel="noopener noreferrer" class="social-icon">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
                 </div>
@@ -103,7 +74,7 @@
 
     <!-- ICFAI Law School Section -->
     <section id="about" class="law-final-section">
-        <img src="Images/Logos/Law_School_Logo_rtsq1o.png" alt="Law School Logo" class="section-logo">
+        <img src="Images/Logos/Law_School_Logo_rtsq1o.png" alt="Law School Logo" class="section-logo" loading="lazy">
         <div class="law-final-overlay">
             <h2 class="law-final-header">ICFAI Law School</h2>
             <hr class="law-final-divider">
@@ -115,13 +86,13 @@
                 to enhance legal acumen, promote ethical reasoning, and equip students with the skills to address
                 contemporary legal and environmental challenges.
             </p>
-            <button class="btn law-final-btn">Events</button>
+            <button class="btn law-final-btn" data-toggle="modal" data-target="#eventModal" data-school="law">Events</button>
         </div>
     </section>
 
     <!-- IcfaiTech (Faculty of Science) Section -->
     <section id="schedule" class="fst-final-section">
-        <img src="Images/Logos/IcfaiTech-logo.svg" alt="IcfaiTech Logo" class="section-logo">
+        <img src="Images/Logos/IcfaiTech-logo.svg" alt="IcfaiTech Logo" class="section-logo" loading="lazy">
         <div class="fst-final-overlay">
             <h2 class="fst-final-header">Faculty Of Science & Technology</h2>
             <hr class="fst-final-divider">
@@ -134,14 +105,14 @@
                 expertise, encouraging innovation, and equipping students to tackle real-world problems through
                 technology.
             </p>
-            <button class="btn fst-final-btn">Events</button>
+            <button class="btn fst-final-btn" data-toggle="modal" data-target="#eventModal" data-school="tech">Events</button>
         </div>
     </section>
 
     <!-- ICFAI Business School Section -->
     <section id="highlights" class="ibs-final-section">
         <!-- The background image will be on .ibs-final-section -->
-        <img src="Images/Logos/IBS_Logo.png" alt="IBS Logo" class="section-logo">
+        <img src="Images/Logos/IBS_Logo.png" alt="IBS Logo" class="section-logo" loading="lazy">
         <div class="ibs-final-overlay">
             <h2 class="ibs-final-header">ICFAI Business School</h2>
             <hr class="ibs-final-divider">
@@ -153,13 +124,13 @@
                 global business simulations, which aim to sharpen managerial skills, foster innovation, and prepare them
                 for the complexities of the corporate world.
             </p>
-            <button class="btn ibs-final-btn">EVENTS</button>
+            <button class="btn ibs-final-btn" data-toggle="modal" data-target="#eventModal" data-school="ibs">EVENTS</button>
         </div>
     </section>
 
     <!-- Faculty Of Social Science Section -->
     <section id="social-science" class="soc-final-section">
-        <img src="Images/Logos/Social_Sciences_Logo_wqyh7p.png" alt="Social Sciences Logo" class="section-logo">
+        <img src="Images/Logos/Social_Sciences_Logo_wqyh7p.png" alt="Social Sciences Logo" class="section-logo" loading="lazy">
         <div class="soc-final-overlay">
             <h2 class="soc-final-header">Faculty Of Social Science</h2>
             <hr class="soc-final-divider">
@@ -172,13 +143,13 @@
                 empathy, and a deeper understanding of societal dynamics, creating a platform for students to engage
                 with real-world issues.
             </p>
-            <button class="btn soc-final-btn">Events</button>
+            <button class="btn soc-final-btn" data-toggle="modal" data-target="#eventModal" data-school="socialScience">Events</button>
         </div>
     </section>
 
     <!-- ICFAI Architecture Section -->
     <section id="architecture" class="arch-final-section">
-        <img src="Images/Logos/Archit_logo_qxoi9i.png" alt="Architecture Logo" class="section-logo">
+        <img src="Images/Logos/Archit_logo_qxoi9i.png" alt="Architecture Logo" class="section-logo" loading="lazy">
         <div class="arch-final-overlay">
             <h2 class="arch-final-header">ICFAI Architecture</h2>
             <hr class="arch-final-divider">
@@ -190,7 +161,7 @@
                 functionality. These initiatives aim to nurture creativity, technical expertise, and a sense of
                 responsibility toward sustainable development and cultural preservation.
             </p>
-            <button class="btn arch-final-btn">Events</button>
+            <button class="btn arch-final-btn" data-toggle="modal" data-target="#eventModal" data-school="architecture">Events</button>
         </div>
     </section>
 
@@ -311,7 +282,7 @@
                 here to help — reach out to us anytime!</p>
             <div class="footer-social mt-3">
                 <span class="footer-follow">Follow Us On</span>
-                <a href="https://www.instagram.com/thrithi.icfai" target="_blank" class="footer-social-icon">
+                <a href="https://www.instagram.com/thrithi.icfai" target="_blank" rel="noopener noreferrer" class="footer-social-icon">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
             </div>
@@ -330,92 +301,104 @@
         </div>
     </footer>
 
-    <!-- Registration Modal -->
-    <div class="modal fade" id="registrationModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-        role="dialog" aria-labelledby="registrationModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title" id="registrationModalLabel">Complete Registration</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <!-- 2-Step Event & Registration Modal -->
+    <div class="modal fade" id="eventModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="eventModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content custom-modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title" id="eventModalTitle">Select Events</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form id="registrationForm">
-                        <div class="row">
-                            <!-- Student Registration -->
-                            <div class="col-md-6 mb-3 mb-md-0">
-                                <div class="registration-section">
-                                    <h6 class="section-title">Student Registration</h6>
-
-                                    <input type="text" class="form-control reg-input" id="fullName" placeholder="Full Name*" required>
-                                    <input type="tel" class="form-control reg-input" id="phone" placeholder="Mobile No*" required>
-                                    <input type="email" class="form-control reg-input" id="email" placeholder="Email ID*" required>
-                                    <input type="text" class="form-control reg-input" id="college" placeholder="Institution Name*"
-                                        required>
-
-                                    <div class="file-upload-group mt-3">
-                                        <label class="upload-label">Upload College ID Card (jpg/jpeg/heic)*:</label>
-                                        <div class="custom-file-input-wrapper">
-                                            <input type="file" class="form-control-file" id="collegeID"
-                                                accept="image/jpeg, image/jpg, image/heic" required>
-                                        </div>
-                                        <div id="collegeFileContainer"></div>
-                                    </div>
-
-                                    <div class="file-upload-group mt-3">
-                                        <label class="upload-label">Upload Aadhaar Card (jpg/jpeg/heic)*:</label>
-                                        <div class="custom-file-input-wrapper">
-                                            <input type="file" class="form-control-file" id="aadhaarID"
-                                                accept="image/jpeg, image/jpg, image/heic" required>
-                                        </div>
-                                        <div id="aadhaarFileContainer"></div>
-                                    </div>
-                                </div>
+                
+                <div class="modal-body pt-2">
+                    
+                    <!-- STEP 1: Event Selection -->
+                    <div id="step1-events">
+                        <div class="registration-section">
+                            <h6 class="section-title text-center mb-3">Available Events</h6>
+                            
+                            <!-- Dynamic Events Container -->
+                            <div id="dynamicEventCheckboxes" class="event-checkboxes-container flex-grow-1">
+                                <!-- Events populated by JS -->
                             </div>
-
-                            <!-- Event Registration -->
-                            <div class="col-md-6">
-                                <div class="registration-section h-100">
-                                    <h6 class="section-title">Event Registration</h6>
-
-                                    <div class="form-group">
-                                        <label class="dropdown-label">Select the School*:</label>
-                                        <select class="form-control reg-select" id="schoolSelect" required>
-                                            <option value="">-- Select School --</option>
-                                            <option value="tech">IcfaiTech Events</option>
-                                            <option value="ibs">IBS Events</option>
-                                            <option value="law">ICFAI Law School Events</option>
-                                            <option value="socialScience">Faculty of Social Science Events</option>
-                                            <option value="architecture">ICFAI Architecture Events</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group flex-grow-1">
-                                        <label class="dropdown-label">Select the Events*:</label>
-                                        <div id="eventCheckboxes" class="event-checkboxes-container"></div>
-                                    </div>
-
-                                    <div class="total-amount mb-4">
-                                        Total Amount: <span id="totalAmount">0/-</span>
-                                    </div>
-
-                                    <button type="submit" class="btn submit-proceed-btn w-100 mt-auto">Submit & Proceed
-                                        to Payment</button>
-                                </div>
+                            
+                            <!-- Price Summary -->
+                            <div class="total-amount-box text-center mt-3 mb-3">
+                                Total Amount: <span id="step1TotalAmount" class="font-weight-bold">₹0</span>
                             </div>
+                            
+                            <button type="button" class="btn submit-proceed-btn w-100" id="btnProceedToRegistration">
+                                Proceed to Registration
+                            </button>
                         </div>
-                    </form>
+                    </div>
+
+                    <!-- STEP 2: Registration Form -->
+                    <div id="step2-registration" style="display: none;">
+                        <form id="registrationForm">
+                            <div class="registration-section">
+                                <h6 class="section-title text-center mb-3">Registration Details</h6>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control reg-input" id="fullName" placeholder="Full Name*" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="tel" class="form-control reg-input" id="phone" placeholder="Mobile No*" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input type="email" class="form-control reg-input" id="email" placeholder="Email ID*" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control reg-input" id="college" placeholder="Institution Name*" required>
+                                    </div>
+                                </div>
+
+                                <div class="file-upload-group mt-3">
+                                    <label class="upload-label">Upload College ID Card (jpg/png/pdf)*:</label>
+                                    <div class="custom-file-input-wrapper">
+                                        <input type="file" class="form-control-file" id="collegeID" accept="image/jpeg, image/png, application/pdf" required>
+                                    </div>
+                                    <div id="collegeFileContainer"></div>
+                                </div>
+
+                                <div class="file-upload-group mt-3">
+                                    <label class="upload-label">Upload Aadhaar Card (jpg/png/pdf)*:</label>
+                                    <div class="custom-file-input-wrapper">
+                                        <input type="file" class="form-control-file" id="aadhaarID" accept="image/jpeg, image/png, application/pdf" required>
+                                    </div>
+                                    <div id="aadhaarFileContainer"></div>
+                                </div>
+
+                                <hr class="my-3 border-light">
+
+                                <!-- Summary of selection -->
+                                <div class="selection-summary mb-3 p-2 rounded" style="background: rgba(255,255,255,0.1);">
+                                    <small class="d-block text-muted">Selected Events: <span id="summaryEventCount">0</span></small>
+                                    <div class="total-amount h6 mb-0 mt-1">
+                                        Total Amount to Pay: <span id="step2TotalAmount" class="text-primary font-weight-bold">₹0</span>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm px-4" id="btnBackToEvents">Back</button>
+                                    <button type="submit" class="btn submit-proceed-btn px-4">Submit & Pay</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 
     <div id="alertContainer" class="alert-container"></div>
- 
+
     <!-- jQuery and Bootstrap JS via CDN -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="scripts.js"></script>
