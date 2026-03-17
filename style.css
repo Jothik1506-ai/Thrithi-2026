@@ -64,7 +64,6 @@ body {
     z-index: 10;
     /* Synchronized duration: 1.0s pause + 1.2s movement = 2.2s */
     animation: logoIntro 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    will-change: transform, opacity;
 }
 
 @keyframes logoIntro {
@@ -90,7 +89,8 @@ body {
 }
 
 .brand-logo {
-    height: 180px;
+    height: 140px;
+    width: auto;
     filter: drop-shadow(0 0 10px rgba(243, 240, 224, 0.8));
     transition: transform 0.4s ease, filter 0.4s ease;
 }
@@ -318,7 +318,7 @@ body {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .brand-logo {
-        height: 140px;
+        height: 55px;
     }
 
     .event-title {
