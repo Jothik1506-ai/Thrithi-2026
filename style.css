@@ -15,7 +15,6 @@ html,
 body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-family: 'Space Grotesk', sans-serif;
     background-color: #641D36;
     /* Fallback to wine red */
@@ -134,53 +133,6 @@ body {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
-
-.registrations-text {
-    font-size: 1rem;
-    color: #EAD7C5;
-    font-weight: 500;
-    letter-spacing: 2.5px;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
-}
-
-/* Timer Styles */
-.time-box {
-    background: rgba(50, 10, 20, 0.4);
-    /* Flat translucent dark maroon */
-    border-radius: 20px;
-    padding: 2rem 1rem;
-    box-shadow: none;
-    /* Removed shadow */
-    transition: transform 0.3s ease, background 0.3s ease;
-}
-
-.time-box:hover {
-    transform: translateY(-8px);
-    box-shadow: none;
-    /* Removed hover shadow */
-    background: rgba(60, 15, 25, 0.5);
-}
-
-.time-value {
-    display: block;
-    font-size: 4.5rem;
-    font-weight: 700;
-    line-height: 1.1;
-    color: #F3F0E0;
-    text-shadow: 0 0 20px rgba(243, 240, 224, 0.6);
-    font-variant-numeric: tabular-nums;
-    /* Prevents jumping widths */
-}
-
-.time-label {
-    display: block;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: #EAD7C5;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-top: 5px;
 }
 
 /* Side Navigation — Dot Style */
@@ -336,34 +288,6 @@ body {
     .typing-text {
         font-size: 1.5rem;
     }
-
-    .time-box {
-        padding: 1.5rem 0.5rem;
-    }
-
-    .time-value {
-        font-size: 2.5rem;
-    }
-
-    .time-label {
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .time-box {
-        padding: 1rem 0.2rem;
-        border-radius: 12px;
-    }
-
-    .time-value {
-        font-size: 2rem;
-    }
-
-    .time-label {
-        font-size: 0.8rem;
-        letter-spacing: 1px;
-    }
 }
 
 
@@ -456,43 +380,11 @@ body {
     color: rgba(243, 240, 224, 0.5);
 }
 
-.upload-label,
-.dropdown-label {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #F3F0E0;
-    margin-bottom: 0.4rem;
-    display: block;
-}
-
-.custom-file-input-wrapper {
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px dashed rgba(234, 215, 197, 0.3);
-    border-radius: 8px;
-    padding: 1rem;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    position: relative;
-    text-align: center;
-}
-.custom-file-input-wrapper:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: #EAD7C5;
-    box-shadow: 0 0 15px rgba(234, 215, 197, 0.1);
-}
-
 .file-status-text {
     font-size: 0.8rem;
     margin-top: 5px;
     min-height: 1.2rem;
     font-weight: 500;
-}
-
-.form-control-file {
-    font-size: 0.85rem;
-    color: #F3F0E0;
-    width: 100%;
-    cursor: pointer;
 }
 
 /* Checkboxes (Step 1) */
@@ -566,22 +458,6 @@ body {
     background-color: #F3F0E0;
     color: #641D36;
     transform: translateY(-2px);
-}
-
-/* File Info Badge */
-.file-info-badge {
-    background: #e9ecef;
-    padding: 6px 12px;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    color: #495057;
-    display: inline-flex;
-    align-items: center;
-    border: 1px solid #dee2e6;
-}
-
-.remove-file-icon:hover {
-    transform: scale(1.2);
 }
 
 /* Alert styles */
@@ -707,12 +583,6 @@ body {
 .close-success-btn:hover {
     background: #4a1528;
     transform: translateY(-2px);
-}
-
-@media (max-width: 991px) {
-    .registration-section.h-100 {
-        height: auto !important;
-    }
 }
 
 /* ===================== CENTRALIZED MODAL: SCHOOL FILTER ===================== */
@@ -1436,17 +1306,6 @@ body {
 
 /* ===================== SMOOTH EXPERIENCE ENHANCEMENTS ===================== */
 
-/* Force GPU compositing on parallax sections to prevent paint jank */
-.law-final-section,
-.fst-final-section,
-.ibs-final-section,
-.soc-final-section,
-.arch-final-section {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    will-change: transform;
-}
-
 /* iOS Safari does not support background-attachment:fixed — fall back to scroll on mobile
    to prevent blank/broken backgrounds and compositing jank on Android */
 @media (max-width: 768px) {
@@ -1464,11 +1323,6 @@ body {
 #register-btn-container {
     opacity: 1;
     transform: translateY(0);
-}
-
-/* Hint browser to promote time boxes to own layer during hover */
-.time-box {
-    will-change: transform;
 }
 
 /* On narrow phones the active-state side-nav label overflows into the content area.

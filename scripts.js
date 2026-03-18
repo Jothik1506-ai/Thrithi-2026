@@ -13,18 +13,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (isDeleting) {
             charIndex--;
-            typewriterElement.textContent = currentPhrase.substring(0, charIndex) + "_";
         } else {
             charIndex++;
-            typewriterElement.textContent = currentPhrase.substring(0, charIndex) + "_";
         }
+        typewriterElement.textContent = currentPhrase.substring(0, charIndex) + "_";
 
         let typeSpeed = isDeleting ? 50 : 100;
 
         if (!isDeleting && charIndex === currentPhrase.length) {
             typeSpeed = 2000;
             isDeleting = true;
-            typewriterElement.textContent = currentPhrase + "_";
         } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
             phraseIndex = (phraseIndex + 1) % phrases.length;
@@ -56,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     sections.forEach((section) => navObserver.observe(section));
 
-    // ---- 2-Step Registration & Event Data ----
+    // ---- Event Data ----
     const events = {
         tech: [
             { name: "Open Mic", price: 299 }, { name: "Snap Verse", price: 299 }, { name: "Mini Games", price: 199 },
@@ -93,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ],
         socialScience: [
             { name: "Canvas Carnival 2.0", price: 299 }, { name: "Finnovate", price: 399 },
-            { name: "The Profiling Room: Where Behaviour Becomes Evidence", price: 399 }, { name: "Canvas Carnival 2.0", price: 299 }
+            { name: "The Profiling Room: Where Behaviour Becomes Evidence", price: 399 }
         ],
         architecture: [
             { name: "Crystal Canvas Art", price: 99 }, { name: "Rang De Matka", price: 199 },
@@ -122,18 +120,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnProceedToRegistration = document.getElementById("btnProceedToRegistration");
     const btnBackToEvents = document.getElementById("btnBackToEvents");
     const registrationForm = document.getElementById("registrationForm");
-    const collegeIdInput = document.getElementById("collegeID");
-    const aadhaarIdInput = document.getElementById("aadhaarID");
-
-    // File upload handling is intentionally excluded from the workflow.
-    if (collegeIdInput) {
-        collegeIdInput.required = false;
-        collegeIdInput.value = "";
-    }
-    if (aadhaarIdInput) {
-        aadhaarIdInput.required = false;
-        aadhaarIdInput.value = "";
-    }
 
     $("#eventModal").on("hide.bs.modal", function () {
         if (document.activeElement && this.contains(document.activeElement)) {
@@ -205,66 +191,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }));
     }
 
-    async function submitRegistration(payload) {
-        if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE")) {
-            throw new Error("Google Apps Script URL is missing.");
-        }
-
-        await new Promise((resolve, reject) => {
-            const iframeName = `gas-frame-${Date.now()}`;
-            const iframe = document.createElement("iframe");
-            iframe.name = iframeName;
-            iframe.style.display = "none";
-
-            const form = document.createElement("form");
-            form.method = "POST";
-            form.action = GOOGLE_SCRIPT_URL;
-            form.target = iframeName;
-            form.style.display = "none";
-
-            const fields = {
-                fullName: payload.fullName,
-                mobileNumber: payload.mobileNumber,
-                emailId: payload.emailId,
-                institutionName: payload.institutionName,
-                eventName: payload.eventName,
-                amount: String(payload.amount)
-            };
-
-            Object.entries(fields).forEach(([key, value]) => {
-                const input = document.createElement("input");
-                input.type = "hidden";
-                input.name = key;
-                input.value = value;
-                form.appendChild(input);
-            });
-
-            let cleanedUp = false;
-            const cleanup = () => {
-                if (cleanedUp) return;
-                cleanedUp = true;
-                form.remove();
-                iframe.remove();
-            };
-
-            iframe.addEventListener("load", () => {
-                setTimeout(() => {
-                    cleanup();
-                    resolve();
-                }, 300);
-            });
-
-            setTimeout(() => {
-                cleanup();
-                reject(new Error("Submission timed out."));
-            }, 10000);
-
-            document.body.appendChild(iframe);
-            document.body.appendChild(form);
-            form.submit();
-        });
-    }
-
     if (btnProceedToRegistration) {
         btnProceedToRegistration.addEventListener("click", () => {
             const selectedBoxes = document.querySelectorAll(".event-checkbox:checked");
@@ -290,77 +216,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    if (registrationForm) {
-        registrationForm.addEventListener("submit", async function (e) {
-            e.preventDefault();
-
-            const fullName = document.getElementById("fullName").value.trim();
-            const mobileNumber = document.getElementById("phone").value.trim();
-            const emailId = document.getElementById("email").value.trim();
-            const institutionName = document.getElementById("college").value.trim();
-            const selectedEvents = getSelectedEvents();
-
-            if (!/^[6-9]\d{9}$/.test(mobileNumber)) {
-                showAlert("Please enter a valid 10-digit Indian mobile number.", "danger");
-                return;
-            }
-
-            if (!emailId) {
-                showAlert("Email ID is required.", "danger");
-                return;
-            }
-
-            if (selectedEvents.length === 0) {
-                showAlert("Please select at least one event.", "danger");
-                return;
-            }
-
-            const amount = selectedEvents.reduce((sum, event) => sum + event.amount, 0);
-            const payload = {
-                fullName,
-                mobileNumber,
-                emailId,
-                institutionName,
-                eventName: selectedEvents.map((event) => event.eventName).join(", "),
-                amount,
-                selectedEvents
-            };
-
-            const submitButton = registrationForm.querySelector("button[type='submit']");
-            submitButton.disabled = true;
-            submitButton.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Submitting...`;
-
-            try {
-                await submitRegistration(payload);
-                showAlert(`Registration submitted successfully. Amount: <strong>₹${amount}</strong>`, "success");
-                submitButton.innerHTML = "Submit &amp; Pay";
-                $("#eventModal").modal("hide");
-                registrationForm.reset();
-                renderEvents(currentSchool);
-                summaryEventCount.textContent = "0";
-                step2TotalAmount.textContent = "₹0";
-                step1TotalAmount.textContent = "₹0";
-                removeIdFile("collegeID", "collegeFileContainer");
-                removeIdFile("aadhaarID", "aadhaarFileContainer");
-            } catch (error) {
-                console.error("Registration submission failed:", error);
-                showAlert("Submission failed. Please check the Google Apps Script URL and try again.", "danger");
-                submitButton.disabled = false;
-                submitButton.innerHTML = "Submit &amp; Pay";
-            }
-        });
-    }
-
-    function removeIdFile(inputId, containerId) {
-        const input = document.getElementById(inputId);
-        const container = document.getElementById(containerId);
-        if (input) input.value = "";
-        if (container) container.innerHTML = "";
-    }
-
-    window.removeIdFile = removeIdFile;
-
-    window.showAlert = function (message, type) {
+    // ---- Alert Helper ----
+    function showAlert(message, type) {
         if (!alertContainer) return;
 
         const alertDiv = document.createElement("div");
@@ -376,14 +233,13 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             $(alertDiv).alert("close");
         }, 5000);
-    };
+    }
 
     // ================================================================
     // CENTRALIZED REGISTRATION SYSTEM — STANDALONE & DEEP LINKING
     // Supports mandatory PDF uploads (Aadhaar & College ID)
     // ================================================================
 
-    // ---- Central Data Source ----
     const schoolLabels = {
         tech: "IcfaiTech (FST)",
         ibs: "IBS",
@@ -415,7 +271,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const centralBtnProceed = document.getElementById("centralBtnProceedToRegistration");
     const centralBtnBack = document.getElementById("centralBtnBackToEvents");
     const centralForm = document.getElementById("centralRegistrationForm");
-    const centralPageTitle = document.getElementById("registrationPageTitle");
 
     // ---- Render Logic ----
     function renderCentralEvents(filterSchool) {
@@ -480,8 +335,8 @@ document.addEventListener("DOMContentLoaded", () => {
         centralStep1Events.style.display = "block";
         centralStep2Registration.style.display = "none";
         const urlParams = new URLSearchParams(window.location.search);
-        let schoolParam = urlParams.get('school');
-        const schoolMap = { 'science': 'tech', 'fst': 'tech', 'business': 'ibs', 'management': 'ibs', 'social': 'socialScience', 'ss': 'socialScience', 'arch': 'architecture' };
+        let schoolParam = urlParams.get("school");
+        const schoolMap = { science: "tech", fst: "tech", business: "ibs", management: "ibs", social: "socialScience", ss: "socialScience", arch: "architecture" };
         if (schoolMap[schoolParam]) schoolParam = schoolMap[schoolParam];
         if (schoolParam && schoolLabels[schoolParam]) {
             if (centralSchoolFilter) centralSchoolFilter.value = schoolParam;
@@ -494,11 +349,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ---- File Helpers ----
     const MAX_FILE_SIZE = 2 * 1024 * 1024;
+
     function readFileAsBase64(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
-            reader.onload = () => resolve(reader.result.split(',')[1]);
-            reader.onerror = error => reject(error);
+            reader.onload = () => resolve(reader.result.split(",")[1]);
+            reader.onerror = (error) => reject(error);
             reader.readAsDataURL(file);
         });
     }
@@ -510,7 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         const file = fileInput.files[0];
         if (file.size > MAX_FILE_SIZE) {
-            window.showAlert("File size exceeds 2MB limit.", "danger");
+            showAlert("File size exceeds 2MB limit.", "danger");
             fileInput.value = "";
             if (statusEl) statusEl.innerHTML = "";
             return false;
@@ -519,28 +375,58 @@ document.addEventListener("DOMContentLoaded", () => {
         return file;
     }
 
-    // ---- Form Submission ----
+    // ---- Form Submission (iframe method avoids CORS with Google Apps Script) ----
     async function submitRegistration(payload) {
         const iframeName = `gas-frame-${Date.now()}`;
         const iframe = document.createElement("iframe");
-        iframe.name = iframeName; iframe.style.display = "none";
+        iframe.name = iframeName;
+        iframe.style.display = "none";
+
         const form = document.createElement("form");
-        form.method = "POST"; form.action = GOOGLE_SCRIPT_URL; form.target = iframeName; form.style.display = "none";
+        form.method = "POST";
+        form.action = GOOGLE_SCRIPT_URL;
+        form.target = iframeName;
+        form.style.display = "none";
+
         const fields = {
-            fullName: payload.fullName, mobileNumber: payload.mobileNumber, emailId: payload.emailId,
-            institutionName: payload.institutionName, eventName: payload.eventName, amount: String(payload.amount),
-            aadhaarContent: payload.aadhaarContent || "", aadhaarName: payload.aadhaarName || "",
-            collegeIdContent: payload.collegeIdContent || "", collegeIdName: payload.collegeIdName || ""
+            fullName: payload.fullName,
+            mobileNumber: payload.mobileNumber,
+            emailId: payload.emailId,
+            institutionName: payload.institutionName,
+            eventName: payload.eventName,
+            amount: String(payload.amount),
+            aadhaarContent: payload.aadhaarContent || "",
+            aadhaarName: payload.aadhaarName || "",
+            collegeIdContent: payload.collegeIdContent || "",
+            collegeIdName: payload.collegeIdName || ""
         };
+
         Object.entries(fields).forEach(([key, value]) => {
             const input = document.createElement("input");
-            input.type = "hidden"; input.name = key; input.value = value;
+            input.type = "hidden";
+            input.name = key;
+            input.value = value;
             form.appendChild(input);
         });
-        document.body.appendChild(iframe); document.body.appendChild(form);
+
+        document.body.appendChild(iframe);
+        document.body.appendChild(form);
         form.submit();
-        return new Promise((resolve) => {
-            iframe.onload = () => { setTimeout(() => { iframe.remove(); form.remove(); resolve(); }, 500); };
+
+        return new Promise((resolve, reject) => {
+            const timeout = setTimeout(() => {
+                iframe.remove();
+                form.remove();
+                reject(new Error("Submission timed out. Please check your connection and try again."));
+            }, 15000);
+            iframe.onload = () => {
+                clearTimeout(timeout);
+                setTimeout(() => {
+                    iframe.remove();
+                    form.remove();
+                    resolve();
+                }, 500);
+            };
         });
     }
 
@@ -562,14 +448,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 <button class="close-success-btn">Back to Home</button>
             </div>`;
-        
+
         document.body.appendChild(overlay);
-        
-        // Trigger animation
         setTimeout(() => overlay.classList.add("active"), 10);
-        
-        const closeBtn = overlay.querySelector(".close-success-btn");
-        closeBtn.onclick = () => {
+
+        overlay.querySelector(".close-success-btn").onclick = () => {
             overlay.classList.remove("active");
             setTimeout(() => {
                 overlay.remove();
@@ -580,10 +463,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ---- Event Listeners ----
     initCentralRegistration();
-    if (centralSchoolFilter) centralSchoolFilter.addEventListener("change", function() { renderCentralEvents(this.value); });
-    if (centralDynamicCheckboxes) centralDynamicCheckboxes.addEventListener("change", (e) => { if (e.target.classList.contains("central-event-checkbox")) updateCentralStep1Total(); });
-    
-    ["aadhaarCard", "collegeIdCard", "centralAadhaarCard", "centralCollegeIdCard"].forEach(id => {
+
+    if (centralSchoolFilter) {
+        centralSchoolFilter.addEventListener("change", function () {
+            renderCentralEvents(this.value);
+        });
+    }
+
+    if (centralDynamicCheckboxes) {
+        centralDynamicCheckboxes.addEventListener("change", (e) => {
+            if (e.target.classList.contains("central-event-checkbox")) updateCentralStep1Total();
+        });
+    }
+
+    ["aadhaarCard", "collegeIdCard", "centralAadhaarCard", "centralCollegeIdCard"].forEach((id) => {
         const input = document.getElementById(id);
         const st = document.getElementById(id + "Status");
         if (input) input.addEventListener("change", () => validateFile(input, st));
@@ -592,12 +485,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (centralBtnProceed) {
         centralBtnProceed.addEventListener("click", () => {
             const checked = document.querySelectorAll(".central-event-checkbox:checked");
-            if (checked.length === 0) { window.showAlert("Please select an event.", "danger"); return; }
+            if (checked.length === 0) {
+                showAlert("Please select an event.", "danger");
+                return;
+            }
             if (centralSummaryCount) centralSummaryCount.textContent = checked.length;
             if (centralStep2Total) centralStep2Total.textContent = `₹${updateCentralStep1Total()}`;
             centralStep1Events.style.display = "none";
             centralStep2Registration.style.display = "block";
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0);
         });
     }
 
@@ -605,84 +501,126 @@ document.addEventListener("DOMContentLoaded", () => {
         centralBtnBack.addEventListener("click", () => {
             centralStep2Registration.style.display = "none";
             centralStep1Events.style.display = "block";
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0);
         });
     }
 
     if (centralForm) {
-        centralForm.addEventListener("submit", async function(e) {
+        centralForm.addEventListener("submit", async function (e) {
             e.preventDefault();
             const selectedEvents = getCentralSelectedEvents();
+            if (selectedEvents.length === 0) {
+                showAlert("Please select at least one event.", "danger");
+                return;
+            }
+            const mobileNumber = document.getElementById("centralPhone").value.trim();
+            if (!/^[6-9]\d{9}$/.test(mobileNumber)) {
+                showAlert("Please enter a valid 10-digit Indian mobile number.", "danger");
+                return;
+            }
             const aadhaarFile = validateFile(document.getElementById("centralAadhaarCard"), null);
             const collegeIdFile = validateFile(document.getElementById("centralCollegeIdCard"), null);
-            if (!aadhaarFile || !collegeIdFile) { window.showAlert("Document uploads are mandatory.", "danger"); return; }
-            
+            if (!aadhaarFile || !collegeIdFile) {
+                showAlert("Document uploads are mandatory.", "danger");
+                return;
+            }
+
             const btn = centralForm.querySelector("button[type='submit']");
-            btn.disabled = true; btn.innerHTML = "Submitting...";
+            btn.disabled = true;
+            btn.innerHTML = "Submitting...";
+
             try {
                 const totalAmt = selectedEvents.reduce((s, ev) => s + ev.amount, 0);
                 const payload = {
                     fullName: document.getElementById("centralFullName").value.trim(),
-                    mobileNumber: document.getElementById("centralPhone").value.trim(),
+                    mobileNumber,
                     emailId: document.getElementById("centralEmail").value.trim(),
                     institutionName: document.getElementById("centralCollege").value.trim(),
-                    eventName: selectedEvents.map(ev => `${ev.eventName} (${ev.school})`).join(", "),
+                    eventName: selectedEvents.map((ev) => `${ev.eventName} (${ev.school})`).join(", "),
                     amount: totalAmt,
-                    aadhaarContent: await readFileAsBase64(aadhaarFile),
-                    aadhaarName: aadhaarFile.name,
-                    collegeIdContent: await readFileAsBase64(collegeIdFile),
-                    collegeIdName: collegeIdFile.name
                 };
+                const [aadhaarContent, collegeIdContent] = await Promise.all([
+                    readFileAsBase64(aadhaarFile),
+                    readFileAsBase64(collegeIdFile)
+                ]);
+                payload.aadhaarContent = aadhaarContent;
+                payload.aadhaarName = aadhaarFile.name;
+                payload.collegeIdContent = collegeIdContent;
+                payload.collegeIdName = collegeIdFile.name;
                 await submitRegistration(payload);
                 showSuccessPopup(totalAmt, "index.html");
-            } catch (e) { btn.disabled = false; btn.innerHTML = "Submit & Pay"; }
+            } catch (err) {
+                console.error("Registration submission failed:", err);
+                showAlert("Submission failed. Please try again.", "danger");
+                btn.disabled = false;
+                btn.innerHTML = "Submit &amp; Pay";
+            }
         });
     }
 
-    // Modal Form Logic
+    // ---- Modal Form Logic ----
     if (registrationForm) {
-        registrationForm.addEventListener("submit", async function(e) {
+        registrationForm.addEventListener("submit", async function (e) {
             e.preventDefault();
+
+            const mobileNumber = document.getElementById("phone").value.trim();
+            if (!/^[6-9]\d{9}$/.test(mobileNumber)) {
+                showAlert("Please enter a valid 10-digit Indian mobile number.", "danger");
+                return;
+            }
+
+            const selected = getSelectedEvents();
+            if (selected.length === 0) {
+                showAlert("Please select at least one event.", "danger");
+                return;
+            }
+
             const aadhaarFile = validateFile(document.getElementById("aadhaarCard"), null);
             const collegeIdFile = validateFile(document.getElementById("collegeIdCard"), null);
-            if (!aadhaarFile || !collegeIdFile) { window.showAlert("Document uploads are mandatory.", "danger"); return; }
+            if (!aadhaarFile || !collegeIdFile) {
+                showAlert("Document uploads are mandatory.", "danger");
+                return;
+            }
+
             const btn = registrationForm.querySelector("button[type='submit']");
-            btn.disabled = true; btn.innerHTML = "Submitting...";
+            btn.disabled = true;
+            btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Submitting...`;
+
             try {
-                const selected = getSelectedEvents();
                 const totalAmt = selected.reduce((s, ev) => s + ev.amount, 0);
                 const payload = {
                     fullName: document.getElementById("fullName").value.trim(),
-                    mobileNumber: document.getElementById("phone").value.trim(),
+                    mobileNumber,
                     emailId: document.getElementById("email").value.trim(),
                     institutionName: document.getElementById("college").value.trim(),
-                    eventName: selected.map(ev => ev.eventName).join(", "),
+                    eventName: selected.map((ev) => ev.eventName).join(", "),
                     amount: totalAmt,
-                    aadhaarContent: await readFileAsBase64(aadhaarFile),
-                    aadhaarName: aadhaarFile.name,
-                    collegeIdContent: await readFileAsBase64(collegeIdFile),
-                    collegeIdName: collegeIdFile.name
                 };
+                const [aadhaarContent2, collegeIdContent2] = await Promise.all([
+                    readFileAsBase64(aadhaarFile),
+                    readFileAsBase64(collegeIdFile)
+                ]);
+                payload.aadhaarContent = aadhaarContent2;
+                payload.aadhaarName = aadhaarFile.name;
+                payload.collegeIdContent = collegeIdContent2;
+                payload.collegeIdName = collegeIdFile.name;
                 await submitRegistration(payload);
                 $("#eventModal").modal("hide");
                 showSuccessPopup(totalAmt, null);
-                btn.disabled = false; btn.innerHTML = "Submit & Pay";
                 registrationForm.reset();
-            } catch (e) { btn.disabled = false; btn.innerHTML = "Submit & Pay"; }
+                renderEvents(currentSchool);
+                summaryEventCount.textContent = "0";
+                step2TotalAmount.textContent = "₹0";
+                step1TotalAmount.textContent = "₹0";
+            } catch (err) {
+                console.error("Registration submission failed:", err);
+                showAlert("Submission failed. Please try again.", "danger");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = "Submit &amp; Pay";
+            }
         });
     }
-
-    if (btnProceedToRegistration) {
-        btnProceedToRegistration.addEventListener("click", () => {
-            const sel = document.querySelectorAll(".event-checkbox:checked");
-            if (sel.length === 0) return;
-            summaryEventCount.textContent = sel.length;
-            step2TotalAmount.textContent = `₹${updateStep1Total()}`;
-            step1Events.style.display = "none";
-            step2Registration.style.display = "block";
-        });
-    }
-    if (btnBackToEvents) { btnBackToEvents.addEventListener("click", () => { step2Registration.style.display = "none"; step1Events.style.display = "block"; }); }
 
     // ================================================================
     // END: Centralized Registration System
