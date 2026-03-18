@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyxN5QR3mU2W7wqUpcQhgW1OiMDYP-K7_BBNgJx16gdZPjKaUNdObNdJcHTIUjw61it/exec";
+
     // ---- Typing Effect ----
     const typewriterElement = document.getElementById("typewriter");
     const phrases = ["Registrations Open Now!"];
@@ -10,11 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentPhrase = phrases[phraseIndex];
 
         if (isDeleting) {
-            // Remove a character
             charIndex--;
             typewriterElement.textContent = currentPhrase.substring(0, charIndex) + "_";
         } else {
-            // Add a character
             charIndex++;
             typewriterElement.textContent = currentPhrase.substring(0, charIndex) + "_";
         }
@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let typeSpeed = isDeleting ? 50 : 100;
 
         if (!isDeleting && charIndex === currentPhrase.length) {
-            // Pause at end of phrase — keep cursor visible during pause
             typeSpeed = 2000;
             isDeleting = true;
             typewriterElement.textContent = currentPhrase + "_";
@@ -35,35 +34,30 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(typeEffect, typeSpeed);
     }
 
-    // Start typing effect after logo intro animation settles
     setTimeout(typeEffect, 1000);
 
-
-    // ---- Active Nav Dot on Scroll (IntersectionObserver — no scroll-event jank) ----
+    // ---- Active Nav Dot on Scroll ----
     const sections = document.querySelectorAll('section[id], div[id="home"]');
-    const navLinks = document.querySelectorAll('.side-nav a');
+    const navLinks = document.querySelectorAll(".side-nav a");
 
     const navObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                const id = entry.target.getAttribute('id');
-                navLinks.forEach(link => {
-                    link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+                const id = entry.target.getAttribute("id");
+                navLinks.forEach((link) => {
+                    link.classList.toggle("active", link.getAttribute("href") === "#" + id);
                 });
             }
         });
     }, {
-        // Trigger when a section occupies the centre band of the viewport
-        rootMargin: '-40% 0px -40% 0px',
+        rootMargin: "-40% 0px -40% 0px",
         threshold: 0
     });
 
-    sections.forEach(section => navObserver.observe(section));
+    sections.forEach((section) => navObserver.observe(section));
 
     // ---- 2-Step Registration & Event Data ----
-    // OWNER: Jothik — Edit events here
     const events = {
-        // SCHOOL: IcfaiTech
         tech: [
             { name: "Open Mic", price: 299 }, { name: "Snap Verse", price: 299 }, { name: "Mini Games", price: 199 },
             { name: "Control Cup", price: 199 }, { name: "Code Smells", price: 199 }, { name: "Chess With AI", price: 299 },
@@ -77,13 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Campus Bingo", price: 199 }, { name: "BookMark Studio", price: 199 }, { name: "RC Car Racing", price: 299 },
             { name: "Corn Hole", price: 199 }, { name: "Art Expo Competition", price: 299 }, { name: "Words Of Wonder", price: 199 }
         ],
-        // SCHOOL: IBS
         ibs: [
-            { name: "Market Kshetra", price: 299 }, { name: "Rise to the Hammer", price: 299 }, { name: "Genesis", price: 299 },
-            { name: "Resolve 360", price: 299 }, { name: "Zero Hour", price: 299 }, { name: "KBC", price: 199 },
-            { name: "Market Masters", price: 199 }
+            { name: "Genesis", price: 499 }, { name: "Data decode", price: 499 }, { name: "Marketkshetra", price: 499 },
+            { name: "Idealouge", price: 499 }, { name: "Bids & Bails", price: 499 }, { name: "Time trap", price: 499 },
+            { name: "Frame the Find", price: 499 }, { name: "FrameVerse", price: 499 }
         ],
-        // SCHOOL: Law
         law: [
             { name: "Ideation", price: 499 }, { name: "Murder Mystery", price: 399 },
             { name: "The Plot Twist", price: 499 }, { name: "BGMI Tournament", price: 499 },
@@ -96,15 +88,13 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Blind-Folded Treasure Hunt", price: 499 }, { name: "Legal Meme Competition", price: 299 },
             { name: "Extempore Moot Court", price: 499 }, { name: "Shabd Sangram (Debate)", price: 499 },
             { name: "Treble Quest", price: 399 }, { name: "The Web of Lies", price: 399 },
-            { name: "Monopoly – The Bargain Battle", price: 399 }, { name: "Journal/Vision Board", price: 399 },
+            { name: "Monopoly - The Bargain Battle", price: 399 }, { name: "Journal/Vision Board", price: 399 },
             { name: "Tote Bag Painting", price: 399 }, { name: "Chamber of Seven Sins", price: 299 }
         ],
-        // SCHOOL: Social Science
         socialScience: [
-            { name: "Canvas Carnival", price: 200 }, { name: "Econ-Psych Shutdown", price: 399 },
-            { name: "Lens Legacy", price: 200 }, { name: "Flip The Argument", price: 299 }
+            { name: "Canvas Carnival 2.0", price: 299 }, { name: "Finnovate", price: 399 },
+            { name: "The Profiling Room: Where Behaviour Becomes Evidence", price: 399 }, { name: "Canvas Carnival 2.0", price: 299 }
         ],
-        // SCHOOL: Architecture
         architecture: [
             { name: "Crystal Canvas Art", price: 99 }, { name: "Rang De Matka", price: 199 },
             { name: "Digital Doodles", price: 199 }
@@ -121,44 +111,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentSchool = null;
 
-    // DOM Elements — cached once at init to avoid repeated getElementById calls
     const eventModalTitle = document.getElementById("eventModalTitle");
     const dynamicEventCheckboxes = document.getElementById("dynamicEventCheckboxes");
     const alertContainer = document.getElementById("alertContainer");
-    
-    // Steps
     const step1Events = document.getElementById("step1-events");
     const step2Registration = document.getElementById("step2-registration");
-    
-    // Totals
     const step1TotalAmount = document.getElementById("step1TotalAmount");
     const step2TotalAmount = document.getElementById("step2TotalAmount");
     const summaryEventCount = document.getElementById("summaryEventCount");
-    
-    // Buttons
     const btnProceedToRegistration = document.getElementById("btnProceedToRegistration");
     const btnBackToEvents = document.getElementById("btnBackToEvents");
     const registrationForm = document.getElementById("registrationForm");
+    const collegeIdInput = document.getElementById("collegeID");
+    const aadhaarIdInput = document.getElementById("aadhaarID");
 
-    // Accessibility fix: blur any focused element inside the modal before Bootstrap
-    // sets aria-hidden="true" on it — prevents "aria-hidden on focused element" warning.
-    $('#eventModal').on('hide.bs.modal', function () {
+    // File upload handling is intentionally excluded from the workflow.
+    if (collegeIdInput) {
+        collegeIdInput.required = false;
+        collegeIdInput.value = "";
+    }
+    if (aadhaarIdInput) {
+        aadhaarIdInput.required = false;
+        aadhaarIdInput.value = "";
+    }
+
+    $("#eventModal").on("hide.bs.modal", function () {
         if (document.activeElement && this.contains(document.activeElement)) {
             document.activeElement.blur();
         }
     });
 
-    // 1. Open Modal via "Events" Buttons
-    document.querySelectorAll('[data-target="#eventModal"]').forEach(btn => {
-        btn.addEventListener('click', function() {
-            currentSchool = this.getAttribute('data-school');
+    document.querySelectorAll('[data-target="#eventModal"]').forEach((btn) => {
+        btn.addEventListener("click", function () {
+            currentSchool = this.getAttribute("data-school");
             eventModalTitle.textContent = "Select Events - " + (schoolTitles[currentSchool] || "");
 
-            // Reset to Step 1
             step1Events.style.display = "block";
             step2Registration.style.display = "none";
 
-            // Reset submit button state so repeat opens are not stuck disabled
             if (registrationForm) {
                 const submitBtn = registrationForm.querySelector("button[type='submit']");
                 if (submitBtn) {
@@ -167,21 +157,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            // Render Events for the specific school
             renderEvents(currentSchool);
         });
     });
 
-    // 2. Render Checkboxes dynamically
     function renderEvents(schoolKey) {
         dynamicEventCheckboxes.innerHTML = "";
         step1TotalAmount.textContent = "₹0";
-        
+
         if (events[schoolKey]) {
             events[schoolKey].forEach((event, idx) => {
-                const div = document.createElement('div');
-                div.className = 'form-check custom-checkbox mb-2';
-                // Using event name as ID key to ensure uniqueness and readability
+                const div = document.createElement("div");
+                div.className = "form-check custom-checkbox mb-2";
                 const inputId = `event-${schoolKey}-${idx}`;
                 div.innerHTML = `
                     <input class="form-check-input event-checkbox" type="checkbox" value="${event.price}" data-name="${event.name}" id="${inputId}">
@@ -194,10 +181,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // 3. Delegate Checkbox Change to Update Total
     if (dynamicEventCheckboxes) {
-        dynamicEventCheckboxes.addEventListener('change', (e) => {
-            if (e.target.classList.contains('event-checkbox')) {
+        dynamicEventCheckboxes.addEventListener("change", (e) => {
+            if (e.target.classList.contains("event-checkbox")) {
                 updateStep1Total();
             }
         });
@@ -212,143 +198,158 @@ document.addEventListener("DOMContentLoaded", () => {
         return total;
     }
 
-    // 4. Proceed to Registration (Step 1 -> Step 2)
+    function getSelectedEvents() {
+        return Array.from(document.querySelectorAll(".event-checkbox:checked")).map((checkbox) => ({
+            eventName: checkbox.getAttribute("data-name"),
+            amount: parseInt(checkbox.value, 10)
+        }));
+    }
+
+    async function submitRegistration(payload) {
+        if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE")) {
+            throw new Error("Google Apps Script URL is missing.");
+        }
+
+        await new Promise((resolve, reject) => {
+            const iframeName = `gas-frame-${Date.now()}`;
+            const iframe = document.createElement("iframe");
+            iframe.name = iframeName;
+            iframe.style.display = "none";
+
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = GOOGLE_SCRIPT_URL;
+            form.target = iframeName;
+            form.style.display = "none";
+
+            const fields = {
+                fullName: payload.fullName,
+                mobileNumber: payload.mobileNumber,
+                emailId: payload.emailId,
+                institutionName: payload.institutionName,
+                eventName: payload.eventName,
+                amount: String(payload.amount)
+            };
+
+            Object.entries(fields).forEach(([key, value]) => {
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = key;
+                input.value = value;
+                form.appendChild(input);
+            });
+
+            let cleanedUp = false;
+            const cleanup = () => {
+                if (cleanedUp) return;
+                cleanedUp = true;
+                form.remove();
+                iframe.remove();
+            };
+
+            iframe.addEventListener("load", () => {
+                setTimeout(() => {
+                    cleanup();
+                    resolve();
+                }, 300);
+            });
+
+            setTimeout(() => {
+                cleanup();
+                reject(new Error("Submission timed out."));
+            }, 10000);
+
+            document.body.appendChild(iframe);
+            document.body.appendChild(form);
+            form.submit();
+        });
+    }
+
     if (btnProceedToRegistration) {
-        btnProceedToRegistration.addEventListener('click', () => {
+        btnProceedToRegistration.addEventListener("click", () => {
             const selectedBoxes = document.querySelectorAll(".event-checkbox:checked");
             if (selectedBoxes.length === 0) {
-                showAlert("⚠️ Please select at least one event to proceed.", "danger");
+                showAlert("Please select at least one event to proceed.", "danger");
                 return;
             }
-            
+
             const total = updateStep1Total();
-            
-            // Update Summary inside Step 2
             summaryEventCount.textContent = selectedBoxes.length;
             step2TotalAmount.textContent = `₹${total}`;
             eventModalTitle.textContent = "Complete Registration";
-            
-            // Transition UI
             step1Events.style.display = "none";
             step2Registration.style.display = "block";
         });
     }
 
-    // 5. Back to Events (Step 2 -> Step 1)
     if (btnBackToEvents) {
-        btnBackToEvents.addEventListener('click', () => {
-             eventModalTitle.textContent = "Select Events - " + (schoolTitles[currentSchool] || "");
-             step2Registration.style.display = "none";
-             step1Events.style.display = "block";
+        btnBackToEvents.addEventListener("click", () => {
+            eventModalTitle.textContent = "Select Events - " + (schoolTitles[currentSchool] || "");
+            step2Registration.style.display = "none";
+            step1Events.style.display = "block";
         });
     }
 
-    // 6. Final Submit
     if (registrationForm) {
-        registrationForm.addEventListener("submit", function (e) {
+        registrationForm.addEventListener("submit", async function (e) {
             e.preventDefault();
 
-            // --- Phone validation (Fix #5) ---
-            const phone = document.getElementById('phone').value.trim();
-            if (!/^[6-9]\d{9}$/.test(phone)) {
-                showAlert("⚠️ Please enter a valid 10-digit Indian mobile number.", "danger");
+            const fullName = document.getElementById("fullName").value.trim();
+            const mobileNumber = document.getElementById("phone").value.trim();
+            const emailId = document.getElementById("email").value.trim();
+            const institutionName = document.getElementById("college").value.trim();
+            const selectedEvents = getSelectedEvents();
+
+            if (!/^[6-9]\d{9}$/.test(mobileNumber)) {
+                showAlert("Please enter a valid 10-digit Indian mobile number.", "danger");
                 return;
             }
 
-            // --- Recalculate total from checked boxes — not from DOM text (Fix #3) ---
-            let total = 0;
-            document.querySelectorAll(".event-checkbox:checked").forEach(cb => {
-                total += parseInt(cb.value, 10);
-            });
-            const sumText = `₹${total}`;
+            if (!emailId) {
+                showAlert("Email ID is required.", "danger");
+                return;
+            }
+
+            if (selectedEvents.length === 0) {
+                showAlert("Please select at least one event.", "danger");
+                return;
+            }
+
+            const amount = selectedEvents.reduce((sum, event) => sum + event.amount, 0);
+            const payload = {
+                fullName,
+                mobileNumber,
+                emailId,
+                institutionName,
+                eventName: selectedEvents.map((event) => event.eventName).join(", "),
+                amount,
+                selectedEvents
+            };
 
             const submitButton = registrationForm.querySelector("button[type='submit']");
             submitButton.disabled = true;
-            submitButton.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Processing...`;
+            submitButton.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Submitting...`;
 
-            // --- Payment gateway call goes here (Fix #8 structure) ---
-            // Replace the setTimeout below with your actual gateway call (e.g. Razorpay).
-            // On success → run the success block. On failure → run the failure block.
-            setTimeout(() => {
-                const paymentSuccess = true; // Replace with actual gateway response
-
-                if (paymentSuccess) {
-                    // --- Success path ---
-                    showAlert(`✅ Registration Successful! Amount: <strong>${sumText}</strong>`, "success");
-                    // Button stays disabled after success — re-enabled on next modal open (Fix #7)
-                    submitButton.innerHTML = "Submit &amp; Pay";
-                    $('#eventModal').modal('hide');
-                    registrationForm.reset();
-                    // Note: event checkboxes are rebuilt by renderEvents() on next modal open
-                    window.removeIdFile('collegeID', 'collegeFileContainer');
-                    window.removeIdFile('aadhaarID', 'aadhaarFileContainer');
-                } else {
-                    // --- Failure path (Fix #8) ---
-                    showAlert("❌ Payment failed. Please try again.", "danger");
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = "Submit &amp; Pay";
-                }
-            }, 2000);
-        });
-    }
-
-    // --- File Preview Logic ---
-    function handleFileUpload(inputId, containerId) {
-        const input = document.getElementById(inputId);
-        const container = document.getElementById(containerId);
-        if (!input || !container) return;
-
-        input.addEventListener("change", function () {
-            const file = this.files[0];
-            if (!file) return;
-
-            // --- File size validation — max 5 MB (Fix #6) ---
-            const MAX_SIZE_MB = 5;
-            if (file.size > MAX_SIZE_MB * 1024 * 1024) {
-                showAlert(`⚠️ File too large. Maximum allowed size is ${MAX_SIZE_MB}MB.`, "danger");
-                input.value = "";
-                return;
+            try {
+                await submitRegistration(payload);
+                showAlert(`Registration submitted successfully. Amount: <strong>₹${amount}</strong>`, "success");
+                submitButton.innerHTML = "Submit &amp; Pay";
+                $("#eventModal").modal("hide");
+                registrationForm.reset();
+                renderEvents(currentSchool);
+                summaryEventCount.textContent = "0";
+                step2TotalAmount.textContent = "₹0";
+                step1TotalAmount.textContent = "₹0";
+                removeIdFile("collegeID", "collegeFileContainer");
+                removeIdFile("aadhaarID", "aadhaarFileContainer");
+            } catch (error) {
+                console.error("Registration submission failed:", error);
+                showAlert("Submission failed. Please check the Google Apps Script URL and try again.", "danger");
+                submitButton.disabled = false;
+                submitButton.innerHTML = "Submit &amp; Pay";
             }
-
-            // --- Build badge with DOM methods — prevents XSS from malicious file names (Fix #2) ---
-            container.innerHTML = "";
-            const badge = document.createElement('div');
-            badge.className = 'file-info-badge mt-2';
-
-            const fileIcon = document.createElement('i');
-            fileIcon.className = 'fas fa-file-image mr-2';
-
-            const nameSpan = document.createElement('span');
-            nameSpan.textContent = file.name; // textContent never parses HTML — XSS-safe
-
-            const removeIcon = document.createElement('i');
-            removeIcon.className = 'fas fa-times-circle remove-file-icon ml-2';
-            removeIcon.style.cssText = 'cursor:pointer; color:#ff4444;';
-            removeIcon.setAttribute('data-input-id', inputId);
-            removeIcon.setAttribute('data-container-id', containerId);
-
-            badge.appendChild(fileIcon);
-            badge.appendChild(nameSpan);
-            badge.appendChild(removeIcon);
-            container.appendChild(badge);
-
-            // Escape file name before inserting into alert HTML (Fix #2)
-            const safeName = file.name
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;');
-            showAlert(`📂 <strong>${safeName}</strong> uploaded successfully.`, "info");
         });
     }
-
-    // Delegated click handler for remove-file icons — handles dynamically created badges
-    document.addEventListener("click", function (e) {
-        if (e.target.classList.contains("remove-file-icon")) {
-            const inputId = e.target.getAttribute("data-input-id");
-            const containerId = e.target.getAttribute("data-container-id");
-            if (inputId && containerId) removeIdFile(inputId, containerId);
-        }
-    });
 
     function removeIdFile(inputId, containerId) {
         const input = document.getElementById(inputId);
@@ -357,18 +358,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (container) container.innerHTML = "";
     }
 
-    // Expose for post-submit reset (called directly in submit handler)
     window.removeIdFile = removeIdFile;
 
-    handleFileUpload("collegeID", "collegeFileContainer");
-    handleFileUpload("aadhaarID", "aadhaarFileContainer");
-
-    // --- Global Alert Function ---
     window.showAlert = function (message, type) {
-        // alertContainer is cached at DOMContentLoaded scope — no repeated DOM query
         if (!alertContainer) return;
 
-        const alertDiv = document.createElement('div');
+        const alertDiv = document.createElement("div");
         alertDiv.className = `alert alert-${type} alert-dismissible fade show custom-alert`;
         alertDiv.innerHTML = `
             ${message}
@@ -378,9 +373,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         alertContainer.appendChild(alertDiv);
 
-        // Auto-hide alert after 5 seconds
         setTimeout(() => {
-            $(alertDiv).alert('close');
+            $(alertDiv).alert("close");
         }, 5000);
     };
 });
