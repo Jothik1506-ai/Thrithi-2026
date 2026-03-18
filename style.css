@@ -466,19 +466,33 @@ body {
 }
 
 .custom-file-input-wrapper {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px dashed rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-    padding: 0.5rem;
-    transition: background-color 0.2s;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px dashed rgba(234, 215, 197, 0.3);
+    border-radius: 8px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    text-align: center;
 }
 .custom-file-input-wrapper:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #EAD7C5;
+    box-shadow: 0 0 15px rgba(234, 215, 197, 0.1);
+}
+
+.file-status-text {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    min-height: 1.2rem;
+    font-weight: 500;
 }
 
 .form-control-file {
     font-size: 0.85rem;
     color: #F3F0E0;
+    width: 100%;
+    cursor: pointer;
 }
 
 /* Checkboxes (Step 1) */
@@ -588,10 +602,152 @@ body {
     font-weight: 500;
 }
 
+/* =======================================================
+   PREMIUM SUCCESS OVERLAY (Paytm-style)
+======================================================= */
+.registration-success-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 11000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.registration-success-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.success-card {
+    background: #F3F0E0;
+    width: 90%;
+    max-width: 400px;
+    padding: 3rem 2rem;
+    border-radius: 24px;
+    text-align: center;
+    transform: translateY(30px) scale(0.9);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.registration-success-overlay.active .success-card {
+    transform: translateY(0) scale(1);
+}
+
+.checkmark-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 3;
+    stroke: #4bb71b;
+    stroke-miterlimit: 10;
+    margin: 0 auto 1.5rem;
+    box-shadow: inset 0px 0px 0px #4bb71b;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
+
+.checkmark-check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke .3s cubic-bezier(0.650, 0.000, 0.450, 1.000) .8s forwards;
+}
+
+@keyframes stroke { 100% { stroke-dashoffset: 0; } }
+@keyframes scale { 0%, 100% { transform: none; } 50% { transform: scale3d(1.1, 1.1, 1); } }
+@keyframes fill { 100% { box-shadow: inset 0px 0px 0px 50px #4bb71b; } }
+
+.success-title {
+    color: #1a1a1a;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.success-subtitle {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    line-height: 1.4;
+}
+
+.success-details {
+    background: rgba(0,0,0,0.03);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.success-amt {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #641D36;
+}
+
+.close-success-btn {
+    background: #641D36;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 12px;
+    font-weight: 700;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+.close-success-btn:hover {
+    background: #4a1528;
+    transform: translateY(-2px);
+}
+
 @media (max-width: 991px) {
     .registration-section.h-100 {
         height: auto !important;
     }
+}
+
+/* ===================== CENTRALIZED MODAL: SCHOOL FILTER ===================== */
+/* Styles the school dropdown in the centralized "Register Now" modal.
+   Inherits the same dark-theme design as .reg-select inputs. */
+.school-filter-select {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    color: #F3F0E0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.55rem 0.75rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+    /* Ensure dropdown options are readable on all browsers */
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23EAD7C5' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 2.5rem;
+}
+
+.school-filter-select:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: #EAD7C5;
+    box-shadow: 0 0 0 0.2rem rgba(234, 215, 197, 0.2);
+    outline: none;
+    color: #F3F0E0;
+}
+
+.school-filter-select option {
+    background-color: #1a1a1a;
+    color: #F3F0E0;
 }
 
 /* ===================== SECTION LOGOS ===================== */
