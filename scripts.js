@@ -34,6 +34,175 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(typeEffect, 1000);
 
+    // ---- Event Poster Modal Logic ----
+    const posterModalMap = {
+        "law": "Images/Event Temp Images Used css/Law Final template.png",
+        "tech": "Images/Event Temp Images Used css/FST Final template.png",
+        "ibs": "Images/Event Temp Images Used css/IBS events template 1.png",
+        "socialScience": "Images/Event Temp Images Used css/SOSs Final template.png",
+        "architecture": "Images/Event Temp Images Used css/Arch Final template.png"
+    };
+
+    const lawEventsData = [
+        { title: "Ideation", prize: "₹18,000", type: "Idea Presentation", desc: "Participants present innovative ideas to solve real-world problems." },
+        { title: "Murder Mystery", prize: "₹15,000", type: "Interactive Game", desc: "Solve clues and uncover the mystery through teamwork." },
+        { title: "The Plot Twist", prize: "₹18,000", type: "Creative Writing / Storytelling", desc: "Create engaging stories with unexpected twists." },
+        { title: "BGMI Tournament", prize: "₹18,000", type: "Gaming Tournament", desc: "Competitive matches in BGMI (Battle Royale format)." },
+        { title: "FIFA Tournament", prize: "₹15,000", type: "Gaming Tournament", desc: "Compete in FIFA football simulation matches." },
+        { title: "Clash Royale Tournament", prize: "₹12,000", type: "Gaming Tournament", desc: "Strategy-based mobile game battles." },
+        { title: "Eco Art (Painting)", prize: "₹10,000", type: "Art Competition", desc: "Create eco-friendly themed artwork." },
+        { title: "Poster Making Competition", prize: "Not fixed (Participation-based rewards)", type: "Design Competition", desc: "Design creative posters on given themes." },
+        { title: "Canvas Painting", prize: "Display Only", type: "Art Exhibition", desc: "Showcase artistic painting skills on canvas." },
+        { title: "Meme Making Competition", prize: "₹12,000", type: "Creative / Fun", desc: "Create humorous and relatable memes." },
+        { title: "Postcard Making", prize: "₹12,000", type: "Art & Craft", desc: "Design creative postcards." },
+        { title: "Digital Ad-Making", prize: "₹15,000", type: "Marketing / Creative", desc: "Create engaging digital advertisements." },
+        { title: "Psych Sync", prize: "₹12,000", type: "Team Activity", desc: "Test coordination and understanding between teammates." },
+        { title: "Stroop Battle", prize: "Trophy Only", type: "Fun / Cognitive Game", desc: "Based on the Stroop effect—tests focus and reaction." },
+        { title: "Sensus (Reel Making)", prize: "Trophy Only", type: "Video Creation", desc: "Create short reels with impactful content." },
+        { title: "Lip Sync Battle", prize: "₹15,000", type: "Entertainment", desc: "Perform lip-sync acts creatively." },
+        { title: "Guess the Mess", prize: "₹15,000", type: "Fun Game", desc: "Guess items through messy or tricky clues." },
+        { title: "Drama in a Chit", prize: "₹15,000", type: "Acting / Drama", desc: "Perform skits based on random topics." },
+        { title: "Blind-Folded Treasure Hunt", prize: "₹18,000", type: "Adventure Game", desc: "Navigate and find clues while blindfolded." },
+        { title: "Legal Meme Competition", prize: "₹12,000", type: "Creative / Law-themed", desc: "Make memes related to legal concepts." },
+        { title: "Extempore Moot Court", prize: "₹18,000", type: "Law / Debate", desc: "Argue legal cases spontaneously." },
+        { title: "Shabd Sangram (Debate)", prize: "₹15,000", type: "Debate", desc: "Verbal battle of arguments on given topics." },
+        { title: "Treble Quest", prize: "₹12,000", type: "Music / Quiz", desc: "Music-based challenge or quiz event." },
+        { title: "The Web of Lies", prize: "₹15,000", type: "Strategy / Game", desc: "Detect lies and deception among participants." },
+        { title: "Monopoly – The Bargain Battle", prize: "₹15,000", type: "Strategy Game", desc: "Business and negotiation game inspired by Monopoly." },
+        { title: "Journal/Vision Board", prize: "₹12,000", type: "Creative / Personal Development", desc: "Create vision boards or journals." },
+        { title: "Tote Bag Painting", prize: "₹12,000", type: "Art & Craft", desc: "Design and paint tote bags creatively." },
+        { title: "Chamber of Seven Sins", prize: "₹12,000", type: "Themed Game/Event", desc: "Experience-based event around seven deadly sins theme." }
+    ];
+
+    const generateCarouselHtml = (carouselId, eventsList) => {
+        const progressHtml = `
+            <div class="story-progress-container d-flex position-absolute w-100" style="top: 13%; left: 0; padding: 0 20%; z-index: 1050; gap: 4px;">
+                ${eventsList.map((_, index) => `
+                    <div class="story-progress-segment" data-target="#${carouselId}" data-slide-to="${index}">
+                        <div class="story-progress-fill"></div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        const slidesHtml = eventsList.map((e, index) => `
+            <div class="carousel-item ${index === 0 ? 'active' : ''} w-100 h-100" data-interval="4000">
+                <div class="d-flex flex-column justify-content-center h-100" style="padding: 16% 20%; text-align: left;">
+                    <h2 style="font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 1.5rem; font-family: 'DM Serif Display', serif; letter-spacing: 1px;">${e.title}</h2>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: clamp(1rem, 1.8vw, 1.4rem); line-height: 1.8;">
+                        <li style="margin-bottom: 0.5rem;">• <strong>Pool Prize:</strong> ${e.prize}</li>
+                        <li style="margin-bottom: 0.5rem;">• <strong>Type:</strong> ${e.type}</li>
+                        <li>• <strong>Description:</strong> ${e.desc}</li>
+                    </ul>
+                </div>
+            </div>
+        `).join('');
+
+        return `
+            <div id="${carouselId}" class="carousel slide w-100 h-100" data-ride="carousel" style="font-family: 'DM Serif Display', serif; color: #F5F5DC;">
+                ${progressHtml}
+                <div class="carousel-inner w-100 h-100">
+                    ${slidesHtml}
+                </div>
+                <!-- Navigation Controls -->
+                <a class="carousel-control-prev" href="#${carouselId}" role="button" data-slide="prev" style="width: 15%; opacity: 0.9; z-index: 1040;">
+                    <span class="carousel-control-prev-icon" aria-hidden="true" style="width: 3rem; height: 3rem; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#${carouselId}" role="button" data-slide="next" style="width: 15%; opacity: 0.9; z-index: 1040;">
+                    <span class="carousel-control-next-icon" aria-hidden="true" style="width: 3rem; height: 3rem; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        `;
+    };
+
+    const schoolEventDetailsMap = {
+        "law": generateCarouselHtml('lawEventCarousel', lawEventsData)
+    };
+
+    $('#posterModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var school = button.data('school');
+        var modal = $(this);
+        var overlay = modal.find('#modalTextOverlay');
+
+        if (posterModalMap[school]) {
+            modal.find('#modalSchoolPoster').attr('src', posterModalMap[school]);
+        }
+        if (schoolEventDetailsMap[school]) {
+            overlay.html(schoolEventDetailsMap[school]);
+
+            var carousel = overlay.find('.carousel');
+            if (carousel.length > 0) {
+                // Initialize explicitly
+                carousel.carousel({
+                    interval: 4000,
+                    pause: false // We handle pause manually
+                });
+
+                // Start CSS timer
+                carousel[0].style.setProperty('--story-duration', '4000ms');
+
+                var updateStoryProgress = function(activeIndex) {
+                    var segments = carousel.find('.story-progress-segment');
+                    segments.each(function(i) {
+                        var segment = $(this);
+                        segment.removeClass('active completed paused');
+                        if (i < activeIndex) {
+                            segment.addClass('completed');
+                        } else if (i === activeIndex) {
+                            segment[0].offsetWidth; // force reflow
+                            segment.addClass('active');
+                        }
+                    });
+                };
+
+                updateStoryProgress(0); // init
+
+                carousel.on('slide.bs.carousel', function (e) {
+                    updateStoryProgress(e.to);
+                });
+
+                // Prevent instant hover-pausing by tracking a flag
+                carousel.attr('data-can-pause', 'false');
+
+                carousel.on('mouseenter touchstart', function() {
+                    if (carousel.attr('data-can-pause') === 'true') {
+                        carousel.find('.story-progress-segment.active').addClass('paused');
+                        carousel.carousel('pause');
+                    }
+                });
+
+                carousel.on('mouseleave touchend', function() {
+                    carousel.find('.story-progress-segment.active').removeClass('paused');
+                    carousel.carousel('cycle');
+                });
+            }
+        } else {
+            overlay.html('');
+        }
+    });
+
+    // Cleanly manage modal lifecycle to guarantee auto-sliding initializes fully
+    $('#posterModal').on('shown.bs.modal', function() {
+        var carousel = $(this).find('.carousel');
+        if (carousel.length > 0) {
+            carousel.attr('data-can-pause', 'true');
+            // Force cycle when modal is completely visible
+            carousel.carousel('cycle');
+            carousel.find('.story-progress-segment.active').removeClass('paused');
+        }
+    });
+
+    $('#posterModal').on('hidden.bs.modal', function() {
+        var carousel = $(this).find('.carousel');
+        if (carousel.length > 0) {
+            carousel.carousel('pause');
+            carousel.attr('data-can-pause', 'false');
+        }
+    });
+
     // ---- Active Nav Dot on Scroll ----
     const sections = document.querySelectorAll('section[id], div[id="home"]');
     const navLinks = document.querySelectorAll(".side-nav a");
@@ -99,122 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
     };
 
-    const schoolTitles = {
-        tech: "IcfaiTech Events",
-        ibs: "IBS Events",
-        law: "ICFAI Law School Events",
-        socialScience: "Faculty of Social Science Events",
-        architecture: "ICFAI Architecture Events"
-    };
-
-    let currentSchool = null;
-
-    const eventModalTitle = document.getElementById("eventModalTitle");
-    const dynamicEventCheckboxes = document.getElementById("dynamicEventCheckboxes");
     const alertContainer = document.getElementById("alertContainer");
-    const step1Events = document.getElementById("step1-events");
-    const step2Registration = document.getElementById("step2-registration");
-    const step1TotalAmount = document.getElementById("step1TotalAmount");
-    const step2TotalAmount = document.getElementById("step2TotalAmount");
-    const summaryEventCount = document.getElementById("summaryEventCount");
-    const btnProceedToRegistration = document.getElementById("btnProceedToRegistration");
-    const btnBackToEvents = document.getElementById("btnBackToEvents");
-    const registrationForm = document.getElementById("registrationForm");
-
-    $("#eventModal").on("hide.bs.modal", function () {
-        if (document.activeElement && this.contains(document.activeElement)) {
-            document.activeElement.blur();
-        }
-    });
-
-    document.querySelectorAll('[data-target="#eventModal"]').forEach((btn) => {
-        btn.addEventListener("click", function () {
-            currentSchool = this.getAttribute("data-school");
-            eventModalTitle.textContent = "Select Events - " + (schoolTitles[currentSchool] || "");
-
-            step1Events.style.display = "block";
-            step2Registration.style.display = "none";
-
-            if (registrationForm) {
-                const submitBtn = registrationForm.querySelector("button[type='submit']");
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = "Submit &amp; Pay";
-                }
-            }
-
-            renderEvents(currentSchool);
-        });
-    });
-
-    function renderEvents(schoolKey) {
-        dynamicEventCheckboxes.innerHTML = "";
-        step1TotalAmount.textContent = "₹0";
-
-        if (events[schoolKey]) {
-            events[schoolKey].forEach((event, idx) => {
-                const div = document.createElement("div");
-                div.className = "form-check custom-checkbox mb-2";
-                const inputId = `event-${schoolKey}-${idx}`;
-                div.innerHTML = `
-                    <input class="form-check-input event-checkbox" type="checkbox" value="${event.price}" data-name="${event.name}" id="${inputId}">
-                    <label class="form-check-label d-flex justify-content-between w-100" for="${inputId}">
-                        <span>${event.name}</span>
-                        <span class="font-weight-bold">₹${event.price}</span>
-                    </label>`;
-                dynamicEventCheckboxes.appendChild(div);
-            });
-        }
-    }
-
-    if (dynamicEventCheckboxes) {
-        dynamicEventCheckboxes.addEventListener("change", (e) => {
-            if (e.target.classList.contains("event-checkbox")) {
-                updateStep1Total();
-            }
-        });
-    }
-
-    function updateStep1Total() {
-        let total = 0;
-        document.querySelectorAll(".event-checkbox:checked").forEach((checkbox) => {
-            total += parseInt(checkbox.value, 10);
-        });
-        step1TotalAmount.textContent = `₹${total}`;
-        return total;
-    }
-
-    function getSelectedEvents() {
-        return Array.from(document.querySelectorAll(".event-checkbox:checked")).map((checkbox) => ({
-            eventName: checkbox.getAttribute("data-name"),
-            amount: parseInt(checkbox.value, 10)
-        }));
-    }
-
-    if (btnProceedToRegistration) {
-        btnProceedToRegistration.addEventListener("click", () => {
-            const selectedBoxes = document.querySelectorAll(".event-checkbox:checked");
-            if (selectedBoxes.length === 0) {
-                showAlert("Please select at least one event to proceed.", "danger");
-                return;
-            }
-
-            const total = updateStep1Total();
-            summaryEventCount.textContent = selectedBoxes.length;
-            step2TotalAmount.textContent = `₹${total}`;
-            eventModalTitle.textContent = "Complete Registration";
-            step1Events.style.display = "none";
-            step2Registration.style.display = "block";
-        });
-    }
-
-    if (btnBackToEvents) {
-        btnBackToEvents.addEventListener("click", () => {
-            eventModalTitle.textContent = "Select Events - " + (schoolTitles[currentSchool] || "");
-            step2Registration.style.display = "none";
-            step1Events.style.display = "block";
-        });
-    }
 
     // ---- Alert Helper ----
     function showAlert(message, type) {
@@ -476,7 +530,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    ["aadhaarCard", "collegeIdCard", "centralAadhaarCard", "centralCollegeIdCard"].forEach((id) => {
+    ["centralAadhaarCard", "centralCollegeIdCard"].forEach((id) => {
         const input = document.getElementById(id);
         const st = document.getElementById(id + "Status");
         if (input) input.addEventListener("change", () => validateFile(input, st));
@@ -552,70 +606,6 @@ document.addEventListener("DOMContentLoaded", () => {
             } catch (err) {
                 console.error("Registration submission failed:", err);
                 showAlert("Submission failed. Please try again.", "danger");
-                btn.disabled = false;
-                btn.innerHTML = "Submit &amp; Pay";
-            }
-        });
-    }
-
-    // ---- Modal Form Logic ----
-    if (registrationForm) {
-        registrationForm.addEventListener("submit", async function (e) {
-            e.preventDefault();
-
-            const mobileNumber = document.getElementById("phone").value.trim();
-            if (!/^[6-9]\d{9}$/.test(mobileNumber)) {
-                showAlert("Please enter a valid 10-digit Indian mobile number.", "danger");
-                return;
-            }
-
-            const selected = getSelectedEvents();
-            if (selected.length === 0) {
-                showAlert("Please select at least one event.", "danger");
-                return;
-            }
-
-            const aadhaarFile = validateFile(document.getElementById("aadhaarCard"), null);
-            const collegeIdFile = validateFile(document.getElementById("collegeIdCard"), null);
-            if (!aadhaarFile || !collegeIdFile) {
-                showAlert("Document uploads are mandatory.", "danger");
-                return;
-            }
-
-            const btn = registrationForm.querySelector("button[type='submit']");
-            btn.disabled = true;
-            btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Submitting...`;
-
-            try {
-                const totalAmt = selected.reduce((s, ev) => s + ev.amount, 0);
-                const payload = {
-                    fullName: document.getElementById("fullName").value.trim(),
-                    mobileNumber,
-                    emailId: document.getElementById("email").value.trim(),
-                    institutionName: document.getElementById("college").value.trim(),
-                    eventName: selected.map((ev) => ev.eventName).join(", "),
-                    amount: totalAmt,
-                };
-                const [aadhaarContent2, collegeIdContent2] = await Promise.all([
-                    readFileAsBase64(aadhaarFile),
-                    readFileAsBase64(collegeIdFile)
-                ]);
-                payload.aadhaarContent = aadhaarContent2;
-                payload.aadhaarName = aadhaarFile.name;
-                payload.collegeIdContent = collegeIdContent2;
-                payload.collegeIdName = collegeIdFile.name;
-                await submitRegistration(payload);
-                $("#eventModal").modal("hide");
-                showSuccessPopup(totalAmt, null);
-                registrationForm.reset();
-                renderEvents(currentSchool);
-                summaryEventCount.textContent = "0";
-                step2TotalAmount.textContent = "₹0";
-                step1TotalAmount.textContent = "₹0";
-            } catch (err) {
-                console.error("Registration submission failed:", err);
-                showAlert("Submission failed. Please try again.", "danger");
-            } finally {
                 btn.disabled = false;
                 btn.innerHTML = "Submit &amp; Pay";
             }
