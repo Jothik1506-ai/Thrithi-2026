@@ -8,9 +8,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <!-- Google Fonts preconnect — reduces font load latency caused by @import in CSS -->
+    <!-- Google Fonts preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
     <!-- Font Awesome — async prevents render-blocking -->
     <script src="https://kit.fontawesome.com/4bac6d041c.js" crossorigin="anonymous" async></script>
     <!-- Custom CSS -->
@@ -87,7 +88,7 @@
                 to enhance legal acumen, promote ethical reasoning, and equip students with the skills to address
                 contemporary legal and environmental challenges.
             </p>
-            <a href="registration.html?school=law" class="btn law-final-btn">Events</a>
+            <a href="#" class="btn law-final-btn" data-toggle="modal" data-target="#posterModal" data-school="law">Events</a>
         </div>
     </section>
 
@@ -106,7 +107,7 @@
                 expertise, encouraging innovation, and equipping students to tackle real-world problems through
                 technology.
             </p>
-            <a href="registration.html?school=tech" class="btn fst-final-btn">Events</a>
+            <a href="#" class="btn fst-final-btn" data-toggle="modal" data-target="#posterModal" data-school="tech">Events</a>
         </div>
     </section>
 
@@ -124,7 +125,7 @@
                 global business simulations, which aim to sharpen managerial skills, foster innovation, and prepare them
                 for the complexities of the corporate world.
             </p>
-            <a href="registration.html?school=ibs" class="btn ibs-final-btn">EVENTS</a>
+            <a href="#" class="btn ibs-final-btn" data-toggle="modal" data-target="#posterModal" data-school="ibs">EVENTS</a>
         </div>
     </section>
 
@@ -144,7 +145,7 @@
                 empathy, and a deeper understanding of societal dynamics, creating a platform for students to engage
                 with real-world issues.
             </p>
-            <a href="registration.html?school=socialScience" class="btn soc-final-btn">Events</a>
+            <a href="#" class="btn soc-final-btn" data-toggle="modal" data-target="#posterModal" data-school="socialScience">Events</a>
         </div>
     </section>
 
@@ -162,7 +163,7 @@
                 functionality. These initiatives aim to nurture creativity, technical expertise, and a sense of
                 responsibility toward sustainable development and cultural preservation.
             </p>
-            <a href="registration.html?school=architecture" class="btn arch-final-btn">Events</a>
+            <a href="#" class="btn arch-final-btn" data-toggle="modal" data-target="#posterModal" data-school="architecture">Events</a>
         </div>
     </section>
 
@@ -300,103 +301,18 @@
         </div>
     </footer>
 
-    <!-- 2-Step Event & Registration Modal -->
-    <div class="modal fade" id="eventModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
-        aria-labelledby="eventModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content custom-modal-content">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title" id="eventModalTitle">Select Events</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+    <!-- Event Poster Modal -->
+    <div class="modal fade" id="posterModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: fit-content;">
+            <div class="modal-content text-center mx-auto" style="background: transparent; border: none; width: fit-content;">
+                <div class="modal-body p-0 position-relative d-inline-block">
+                    <button type="button" class="close text-white position-absolute" style="top: -10px; right: -15px; z-index: 1050; font-size: 2.5rem; text-shadow: 2px 2px 8px #000; opacity: 1;" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
-
-                <div class="modal-body pt-2">
-
-                    <!-- STEP 1: Event Selection -->
-                    <div id="step1-events">
-                        <div class="registration-section">
-                            <h6 class="section-title text-center mb-3">Available Events</h6>
-
-                            <!-- Dynamic Events Container -->
-                            <div id="dynamicEventCheckboxes" class="event-checkboxes-container flex-grow-1">
-                                <!-- Events populated by JS -->
-                            </div>
-
-                            <!-- Price Summary -->
-                            <div class="total-amount-box text-center mt-3 mb-3">
-                                Total Amount: <span id="step1TotalAmount" class="font-weight-bold">₹0</span>
-                            </div>
-
-                            <button type="button" class="btn submit-proceed-btn w-100" id="btnProceedToRegistration">
-                                Proceed to Registration
-                            </button>
-                        </div>
+                    <img id="modalSchoolPoster" src="" alt="School Event Poster" class="img-fluid" style="border-radius: 12px; max-height: 85vh; width: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                    <!-- Dynamic Text Overlay Container -->
+                    <div id="modalTextOverlay" class="position-absolute" style="top: 0; left: 0; width: 100%; height: 100%; z-index: 1000;">
                     </div>
-
-                    <!-- STEP 2: Registration Form -->
-                    <div id="step2-registration" style="display: none;">
-                        <form id="registrationForm">
-                            <div class="registration-section">
-                                <h6 class="section-title text-center mb-3">Registration Details</h6>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control reg-input" id="fullName"
-                                            placeholder="Full Name*" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="tel" class="form-control reg-input" id="phone"
-                                            placeholder="Mobile No*" required>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <input type="email" class="form-control reg-input" id="email"
-                                            placeholder="Email ID*" required>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <input type="text" class="form-control reg-input" id="college"
-                                            placeholder="Institution Name*" required>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-3">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="text-white-50 small mb-1">Upload Aadhaar Card (JPG, PNG, PDF - Max 2MB)*</label>
-                                        <input type="file" class="form-control reg-input pt-1" id="aadhaarCard"
-                                            accept="image/*,application/pdf" required>
-                                        <div id="aadhaarCardStatus" class="small mt-1 file-status-text"></div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="text-white-50 small mb-1">Upload College ID Card (JPG, PNG, PDF - Max 2MB)*</label>
-                                        <input type="file" class="form-control reg-input pt-1" id="collegeIdCard"
-                                            accept="image/*,application/pdf" required>
-                                        <div id="collegeIdCardStatus" class="small mt-1 file-status-text"></div>
-                                    </div>
-                                </div>
-
-                                <hr class="my-3 border-light">
-
-                                <!-- Summary of selection -->
-                                <div class="selection-summary mb-3 p-2 rounded"
-                                    style="background: rgba(255,255,255,0.1);">
-                                    <small class="d-block text-muted">Selected Events: <span
-                                            id="summaryEventCount">0</span></small>
-                                    <div class="total-amount h6 mb-0 mt-1">
-                                        Total Amount to Pay: <span id="step2TotalAmount"
-                                            class="text-primary font-weight-bold">₹0</span>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex justify-content-between">
-                                    <button type="button" class="btn btn-outline-secondary btn-sm px-4"
-                                        id="btnBackToEvents">Back</button>
-                                    <button type="submit" class="btn submit-proceed-btn px-4">Submit & Pay</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
                 </div>
             </div>
         </div>
