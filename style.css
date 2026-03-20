@@ -878,7 +878,7 @@ body {
     max-width: 1900px;
     min-height: 100vh;
     background-color: rgba(186, 34, 37, 0.75);
-    /* #BA2225 with 85% opacity */
+
     /* Refined burnt orange/amber transparency */
     display: flex;
     flex-direction: column;
@@ -916,7 +916,7 @@ body {
 }
 
 .ibs-final-btn {
-    background-color: rgba(140, 70, 25, 0.85);
+    background-color: rgba(154, 28, 30, 0.75);
     /* Refined darker amber matching the new atmosphere */
     color: #FFFFFF;
     font-family: "Times New Roman", Times, serif;
@@ -930,7 +930,7 @@ body {
 }
 
 .ibs-final-btn:hover {
-    background-color: rgba(110, 55, 15, 0.95);
+    background-color: rgba(154, 28, 30, 0.95);
     color: #FFFFFF;
     transform: translateY(-3px);
 }
