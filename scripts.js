@@ -44,42 +44,58 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const lawEventsData = [
-        { title: "Ideation", prize: "₹18,000", type: "Idea Presentation", desc: "Participants present innovative ideas to solve real-world problems." },
-        { title: "Murder Mystery", prize: "₹15,000", type: "Interactive Game", desc: "Solve clues and uncover the mystery through teamwork." },
-        { title: "The Plot Twist", prize: "₹18,000", type: "Creative Writing / Storytelling", desc: "Create engaging stories with unexpected twists." },
-        { title: "BGMI Tournament", prize: "₹18,000", type: "Gaming Tournament", desc: "Competitive matches in BGMI (Battle Royale format)." },
-        { title: "FIFA Tournament", prize: "₹15,000", type: "Gaming Tournament", desc: "Compete in FIFA football simulation matches." },
-        { title: "Clash Royale Tournament", prize: "₹12,000", type: "Gaming Tournament", desc: "Strategy-based mobile game battles." },
-        { title: "Eco Art (Painting)", prize: "₹10,000", type: "Art Competition", desc: "Create eco-friendly themed artwork." },
-        { title: "Poster Making Competition", prize: "Not fixed (Participation-based rewards)", type: "Design Competition", desc: "Design creative posters on given themes." },
-        { title: "Canvas Painting", prize: "Display Only", type: "Art Exhibition", desc: "Showcase artistic painting skills on canvas." },
-        { title: "Meme Making Competition", prize: "₹12,000", type: "Creative / Fun", desc: "Create humorous and relatable memes." },
-        { title: "Postcard Making", prize: "₹12,000", type: "Art & Craft", desc: "Design creative postcards." },
-        { title: "Digital Ad-Making", prize: "₹15,000", type: "Marketing / Creative", desc: "Create engaging digital advertisements." },
-        { title: "Psych Sync", prize: "₹12,000", type: "Team Activity", desc: "Test coordination and understanding between teammates." },
-        { title: "Stroop Battle", prize: "Trophy Only", type: "Fun / Cognitive Game", desc: "Based on the Stroop effect—tests focus and reaction." },
-        { title: "Sensus (Reel Making)", prize: "Trophy Only", type: "Video Creation", desc: "Create short reels with impactful content." },
-        { title: "Lip Sync Battle", prize: "₹15,000", type: "Entertainment", desc: "Perform lip-sync acts creatively." },
-        { title: "Guess the Mess", prize: "₹15,000", type: "Fun Game", desc: "Guess items through messy or tricky clues." },
-        { title: "Drama in a Chit", prize: "₹15,000", type: "Acting / Drama", desc: "Perform skits based on random topics." },
-        { title: "Blind-Folded Treasure Hunt", prize: "₹18,000", type: "Adventure Game", desc: "Navigate and find clues while blindfolded." },
-        { title: "Legal Meme Competition", prize: "₹12,000", type: "Creative / Law-themed", desc: "Make memes related to legal concepts." },
-        { title: "Extempore Moot Court", prize: "₹18,000", type: "Law / Debate", desc: "Argue legal cases spontaneously." },
-        { title: "Shabd Sangram (Debate)", prize: "₹15,000", type: "Debate", desc: "Verbal battle of arguments on given topics." },
-        { title: "Treble Quest", prize: "₹12,000", type: "Music / Quiz", desc: "Music-based challenge or quiz event." },
-        { title: "The Web of Lies", prize: "₹15,000", type: "Strategy / Game", desc: "Detect lies and deception among participants." },
-        { title: "Monopoly – The Bargain Battle", prize: "₹15,000", type: "Strategy Game", desc: "Business and negotiation game inspired by Monopoly." },
-        { title: "Journal/Vision Board", prize: "₹12,000", type: "Creative / Personal Development", desc: "Create vision boards or journals." },
-        { title: "Tote Bag Painting", prize: "₹12,000", type: "Art & Craft", desc: "Design and paint tote bags creatively." },
-        { title: "Chamber of Seven Sins", prize: "₹12,000", type: "Themed Game/Event", desc: "Experience-based event around seven deadly sins theme." }
+        { title: "Ideation", fee: "₹499", prize: "₹18,000", type: "Idea Presentation", desc: "Present innovative ideas to solve real-world problems." },
+        { title: "Murder Mystery", fee: "₹399", prize: "₹15,000", type: "Interactive Game", desc: "Solve clues and uncover the mystery through teamwork." },
+        { title: "The Plot Twist", fee: "₹499", prize: "₹18,000", type: "Storytelling", desc: "Create engaging stories with unexpected twists." },
+        { title: "BGMI Tournament", fee: "₹499", prize: "₹18,000", type: "Gaming", desc: "Compete in intense BGMI battle royale matches." },
+        { title: "FIFA Tournament", fee: "₹299", prize: "₹15,000", type: "Gaming", desc: "Play competitive football matches in FIFA." },
+        { title: "Clash Royale Tournament", fee: "₹199", prize: "₹12,000", type: "Gaming", desc: "Battle opponents using strategy in Clash Royale." },
+        { title: "Eco Art (Painting)", fee: "NIL", prize: "₹10,000", type: "Art", desc: "Create eco-friendly themed artwork." },
+        { title: "Poster Making Competition", fee: "₹499", prize: "Participation-based", type: "Design", desc: "Design creative posters based on themes." },
+        { title: "Canvas Painting", fee: "NIL", prize: "Display Only", type: "Art Exhibition", desc: "Showcase your painting skills on canvas." },
+        { title: "Meme Making Competition", fee: "₹299", prize: "₹12,000", type: "Creative", desc: "Create funny and relatable memes." },
+        { title: "Postcard Making", fee: "₹399", prize: "₹12,000", type: "Art & Craft", desc: "Design creative and unique postcards." },
+        { title: "Digital Ad-Making", fee: "₹499", prize: "₹15,000", type: "Marketing", desc: "Create engaging digital advertisements." },
+        { title: "Psych Sync", fee: "₹299", prize: "₹12,000", type: "Team Activity", desc: "Test coordination and understanding between teammates." },
+        { title: "Stroop Battle", fee: "₹299", prize: "Trophy", type: "Cognitive Game", desc: "Test focus and reaction speed through challenges." },
+        { title: "Sensus (Reel Making)", fee: "₹299", prize: "Trophy", type: "Video Creation", desc: "Create short reels with creative storytelling." },
+        { title: "Lip Sync Battle", fee: "₹399", prize: "₹15,000", type: "Entertainment", desc: "Perform energetic and creative lip-sync acts." },
+        { title: "Guess the Mess", fee: "₹399", prize: "₹15,000", type: "Fun Game", desc: "Guess items through messy and tricky clues." },
+        { title: "Drama in a Chit", fee: "₹399", prize: "₹15,000", type: "Acting", desc: "Perform skits based on random topics." },
+        { title: "Blind-Folded Treasure Hunt", fee: "₹499", prize: "₹18,000", type: "Adventure", desc: "Find clues and complete tasks while blindfolded." },
+        { title: "Legal Meme Competition", fee: "₹299", prize: "₹12,000", type: "Creative", desc: "Create memes based on legal themes." },
+        { title: "Extempore Moot Court", fee: "₹499", prize: "₹18,000", type: "Law / Debate", desc: "Present legal arguments on the spot." },
+        { title: "Shabd Sangram (Debate)", fee: "₹499", prize: "₹15,000", type: "Debate", desc: "Compete in a verbal battle of arguments." },
+        { title: "Treble Quest", fee: "₹399", prize: "₹12,000", type: "Music / Quiz", desc: "Participate in music-based challenges and quizzes." },
+        { title: "The Web of Lies", fee: "₹399", prize: "₹15,000", type: "Strategy Game", desc: "Identify lies and deception among players." },
+        { title: "Monopoly – The Bargain Battle", fee: "₹399", prize: "₹15,000", type: "Strategy", desc: "Play a business game focused on negotiation and deals." },
+        { title: "Journal / Vision Board", fee: "₹399", prize: "₹12,000", type: "Creative", desc: "Create vision boards or personal journals." },
+        { title: "Tote Bag Painting", fee: "₹399", prize: "₹12,000", type: "Art & Craft", desc: "Design and paint creative tote bags." },
+        { title: "Chamber of Seven Sins", fee: "₹299", prize: "₹12,000", type: "Themed Event", desc: "Experience a game based on the seven deadly sins theme." }
     ];
 
-    const generateCarouselHtml = (carouselId, eventsList) => {
+    const ibsEventsData = [
+        { title: "Genesis", fee: "₹499", prize: "₹18,000", type: "Entrepreneurial", desc: "A competition to showcase innovative business ideas and problem-solving skills." },
+        { title: "Data Decode – “From Chaos to Clarity”", fee: "₹499", prize: "₹18,000", type: "Analytics Competition", desc: "Transform raw data into meaningful insights through analysis and decision-making." },
+        { title: "Marketkshetra", fee: "₹499", prize: "₹18,000", type: "Marketing Simulation", desc: "Design creative marketing campaigns for brands using strategy and innovation." },
+        { title: "Idealogue", fee: "₹499", prize: "₹18,000", type: "Debate", desc: "A debate event testing communication through structured and impromptu rounds." },
+        { title: "Bids & Bails", fee: "₹499", prize: "₹18,000", type: "Auction Simulation", desc: "Build a team through strategic bidding in an IPL-style auction game." },
+        { title: "Time Trap", fee: "₹499", prize: "₹18,000", type: "Strategy / Problem Solving", desc: "Solve challenges under time pressure with teamwork and quick thinking." },
+        { title: "Frame the Find", fee: "₹499", prize: "₹18,000", type: "Videography & Editing", desc: "Create impactful visual stories using videography and editing skills." },
+        { title: "FrameVerse (Short Video Competition)", fee: "₹499", prize: "₹18,000", type: "Short Film / Video", desc: "Produce a short cinematic video within a limited timeframe." }
+    ];
+
+    const generateCarouselHtml = (carouselId, eventsList, isLight = false) => {
+        const textColor = isLight ? '#FFFFFF' : '#F5F5DC';
+        const bodyFont = isLight ? 'inherit' : "'DM Serif Display', serif";
+        const bgStyle = '';
+        const controlFilter = 'filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));';
+
         const progressHtml = `
             <div class="story-progress-container d-flex position-absolute w-100" style="top: 13%; left: 0; padding: 0 20%; z-index: 1050; gap: 4px;">
                 ${eventsList.map((_, index) => `
-                    <div class="story-progress-segment" data-target="#${carouselId}" data-slide-to="${index}">
-                        <div class="story-progress-fill"></div>
+                    <div class="story-progress-segment" data-target="#${carouselId}" data-slide-to="${index}" ${isLight ? 'style="background-color: rgba(255,255,255,0.3);"' : ''}>
+                        <div class="story-progress-fill" ${isLight ? 'style="background-color: #FFFFFF;"' : ''}></div>
                     </div>
                 `).join('')}
             </div>
@@ -88,8 +104,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const slidesHtml = eventsList.map((e, index) => `
             <div class="carousel-item ${index === 0 ? 'active' : ''} w-100 h-100" data-interval="4000">
                 <div class="d-flex flex-column justify-content-center h-100" style="padding: 16% 20%; text-align: left;">
-                    <h2 style="font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 1.5rem; font-family: 'DM Serif Display', serif; letter-spacing: 1px;">${e.title}</h2>
-                    <ul style="list-style: none; padding: 0; margin: 0; font-size: clamp(1rem, 1.8vw, 1.4rem); line-height: 1.8;">
+                    <h2 style="font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 1.5rem; font-family: 'DM Serif Display', serif; letter-spacing: 1px; color: ${isLight ? '#FFFFFF' : textColor};">${e.title}</h2>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: clamp(1rem, 1.8vw, 1.4rem); line-height: 1.8; color: ${textColor}; font-family: ${bodyFont};">
+                        ${e.fee ? `<li style="margin-bottom: 0.5rem;">• <strong>Registration Fee:</strong> ${e.fee}</li>` : ''}
                         <li style="margin-bottom: 0.5rem;">• <strong>Pool Prize:</strong> ${e.prize}</li>
                         <li style="margin-bottom: 0.5rem;">• <strong>Type:</strong> ${e.type}</li>
                         <li>• <strong>Description:</strong> ${e.desc}</li>
@@ -99,18 +116,18 @@ document.addEventListener("DOMContentLoaded", () => {
         `).join('');
 
         return `
-            <div id="${carouselId}" class="carousel slide w-100 h-100" data-ride="carousel" style="font-family: 'DM Serif Display', serif; color: #F5F5DC;">
+            <div id="${carouselId}" class="carousel slide w-100 h-100" data-ride="carousel" style="${bgStyle} ${!isLight ? "font-family: 'DM Serif Display', serif;" : ""} color: ${textColor};">
                 ${progressHtml}
                 <div class="carousel-inner w-100 h-100">
                     ${slidesHtml}
                 </div>
                 <!-- Navigation Controls -->
                 <a class="carousel-control-prev" href="#${carouselId}" role="button" data-slide="prev" style="width: 15%; opacity: 0.9; z-index: 1040;">
-                    <span class="carousel-control-prev-icon" aria-hidden="true" style="width: 3rem; height: 3rem; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));"></span>
+                    <span class="carousel-control-prev-icon" aria-hidden="true" style="width: 3rem; height: 3rem; ${controlFilter}"></span>
                     <span class="sr-only">Previous</span>
                 </a>
                 <a class="carousel-control-next" href="#${carouselId}" role="button" data-slide="next" style="width: 15%; opacity: 0.9; z-index: 1040;">
-                    <span class="carousel-control-next-icon" aria-hidden="true" style="width: 3rem; height: 3rem; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));"></span>
+                    <span class="carousel-control-next-icon" aria-hidden="true" style="width: 3rem; height: 3rem; ${controlFilter}"></span>
                     <span class="sr-only">Next</span>
                 </a>
             </div>
@@ -118,7 +135,8 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const schoolEventDetailsMap = {
-        "law": generateCarouselHtml('lawEventCarousel', lawEventsData)
+        "law": generateCarouselHtml('lawEventCarousel', lawEventsData, false),
+        "ibs": generateCarouselHtml('ibsEventCarousel', ibsEventsData, true)
     };
 
     $('#posterModal').on('show.bs.modal', function (event) {
@@ -144,9 +162,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Start CSS timer
                 carousel[0].style.setProperty('--story-duration', '4000ms');
 
-                var updateStoryProgress = function(activeIndex) {
+                var updateStoryProgress = function (activeIndex) {
                     var segments = carousel.find('.story-progress-segment');
-                    segments.each(function(i) {
+                    segments.each(function (i) {
                         var segment = $(this);
                         segment.removeClass('active completed paused');
                         if (i < activeIndex) {
@@ -167,14 +185,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Prevent instant hover-pausing by tracking a flag
                 carousel.attr('data-can-pause', 'false');
 
-                carousel.on('mouseenter touchstart', function() {
+                carousel.on('mouseenter touchstart', function () {
                     if (carousel.attr('data-can-pause') === 'true') {
                         carousel.find('.story-progress-segment.active').addClass('paused');
                         carousel.carousel('pause');
                     }
                 });
 
-                carousel.on('mouseleave touchend', function() {
+                carousel.on('mouseleave touchend', function () {
                     carousel.find('.story-progress-segment.active').removeClass('paused');
                     carousel.carousel('cycle');
                 });
@@ -185,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Cleanly manage modal lifecycle to guarantee auto-sliding initializes fully
-    $('#posterModal').on('shown.bs.modal', function() {
+    $('#posterModal').on('shown.bs.modal', function () {
         var carousel = $(this).find('.carousel');
         if (carousel.length > 0) {
             carousel.attr('data-can-pause', 'true');
@@ -195,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    $('#posterModal').on('hidden.bs.modal', function() {
+    $('#posterModal').on('hidden.bs.modal', function () {
         var carousel = $(this).find('.carousel');
         if (carousel.length > 0) {
             carousel.carousel('pause');
@@ -239,9 +257,9 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Corn Hole", price: 199 }, { name: "Art Expo Competition", price: 299 }, { name: "Words Of Wonder", price: 199 }
         ],
         ibs: [
-            { name: "Genesis", price: 499 }, { name: "Data decode", price: 499 }, { name: "Marketkshetra", price: 499 },
-            { name: "Idealouge", price: 499 }, { name: "Bids & Bails", price: 499 }, { name: "Time trap", price: 499 },
-            { name: "Frame the Find", price: 499 }, { name: "FrameVerse", price: 499 }
+            { name: "Genesis", price: 499 }, { name: "Data Decode – “From Chaos to Clarity”", price: 499 }, { name: "Marketkshetra", price: 499 },
+            { name: "Idealogue", price: 499 }, { name: "Bids & Bails", price: 499 }, { name: "Time Trap", price: 499 },
+            { name: "Frame the Find", price: 499 }, { name: "FrameVerse (Short Video Competition)", price: 499 }
         ],
         law: [
             { name: "Ideation", price: 499 }, { name: "Murder Mystery", price: 399 },
