@@ -76,25 +76,25 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     const techEventsData = [
-        { title: "Space Quiz", fee: "₹499", prize: "Exciting Prizes", type: "Quiz / Space", desc: "A team quiz testing knowledge about space, rockets, and astronomy." },
-        { title: "Videography Competition", fee: "₹499", prize: "Exciting Prizes", type: "Videography / Online", desc: "Create and submit a short video, with winners decided based on online likes." },
-        { title: "Fit Fusion", fee: "₹299", prize: "Exciting Prizes", type: "Fun / Games", desc: "Participate in engaging table games that test coordination and fun skills." },
-        { title: "Art Expo Competition", fee: "₹299", prize: "Exciting Prizes", type: "Art", desc: "Showcase your artwork creatively and compete to win prizes." },
+        { title: "Space Quiz", fee: "₹499", prize: "₹15000", type: "Quiz / Space", desc: "A team quiz testing knowledge about space, rockets, and astronomy." },
+        { title: "Videography Competition", fee: "₹499", prize: "₹15000", type: "Videography / Online", desc: "Create and submit a short video, with winners decided based on online likes." },
+        { title: "Fit Fusion", fee: "₹299", prize: "₹12000", type: "Fun / Games", desc: "Participate in engaging table games that test coordination and fun skills." },
+        { title: "Art Expo Competition", fee: "₹299", prize: "₹9000", type: "Art", desc: "Showcase your artwork creatively and compete to win prizes." },
         { title: "Aawaz", fee: "₹299–₹499", prize: "Exciting Prizes", type: "Music Competition", desc: "Perform solo, duet, instrumental, or group music acts on an open stage." },
-        { title: "Ritu", fee: "₹499", prize: "Exciting Prizes", type: "Music Quiz", desc: "Test your knowledge of music theory and musical concepts through a quiz." },
-        { title: "Short Film Competition", fee: "₹499", prize: "Exciting Prizes", type: "Filmmaking", desc: "Create and present a short film showcasing your storytelling skills." },
-        { title: "Reels Making Competition", fee: "₹399", prize: "Exciting Prizes", type: "Video Creation", desc: "Make engaging reels under 2 minutes with creative content." },
-        { title: "Script Writing Competition", fee: "₹299", prize: "Exciting Prizes", type: "Writing", desc: "Write an interesting and creative script for a cinematic concept." },
-        { title: "Escape the Bud-Tech Maze", fee: "₹399", prize: "Exciting Prizes", type: "Tech / Puzzle", desc: "Solve coding and tech-based challenges to progress through levels." },
-        { title: "Valorant Tournament", fee: "₹499", prize: "Exciting Prizes", type: "Gaming", desc: "Compete in a 5v5 tactical shooter to outplay and defeat opponents." },
-        { title: "Call of Duty Mobile", fee: "₹299", prize: "Exciting Prizes", type: "Gaming", desc: "Engage in fast-paced combat matches to become the top team." },
-        { title: "BGMI", fee: "₹299", prize: "Exciting Prizes", type: "Gaming", desc: "Survive and compete in a battle royale to be the last team standing." },
-        { title: "Marketing Live", fee: "₹299", prize: "Exciting Prizes", type: "Marketing", desc: "Sell a product creatively within a limited time to impress judges." },
-        { title: "Photo Contest", fee: "₹499", prize: "Exciting Prizes", type: "Photography", desc: "Submit creative photos based on themes and compete for top prizes." },
-        { title: "Photo Scavenger Hunt", fee: "₹399", prize: "Exciting Prizes", type: "Puzzle / Team", desc: "Solve clues and capture photos to complete challenges and win." },
-        { title: "RC Car Racing", fee: "₹299", prize: "Exciting Prizes", type: "Racing", desc: "Race RC cars against opponents to reach the finish line first." },
-        { title: "Acting Competition", fee: "₹299", prize: "Exciting Prizes", type: "Acting", desc: "Perform short acts based on given scenarios with possible surprises." },
-        { title: "Escape Room", fee: "₹299", prize: "Exciting Prizes", type: "Adventure / Puzzle", desc: "Solve clues and escape a horror-themed room within a time limit." }
+        { title: "Ritu", fee: "₹499", prize: "₹15000", type: "Music Quiz", desc: "Test your knowledge of music theory and musical concepts through a quiz." },
+        { title: "Short Film Competition", fee: "₹499", prize: "₹15000", type: "Filmmaking", desc: "Create and present a short film showcasing your storytelling skills." },
+        { title: "Reels Making Competition", fee: "₹399", prize: "₹12000", type: "Video Creation", desc: "Make engaging reels under 2 minutes with creative content." },
+        { title: "Script Writing Competition", fee: "₹299", prize: "₹9000", type: "Writing", desc: "Write an interesting and creative script for a cinematic concept." },
+        { title: "Escape the Bud-Tech Maze", fee: "₹399", prize: "₹12000", type: "Tech / Puzzle", desc: "Solve coding and tech-based challenges to progress through levels." },
+        { title: "Valorant Tournament", fee: "₹499", prize: "₹15000", type: "Gaming", desc: "Compete in a 5v5 tactical shooter to outplay and defeat opponents." },
+        { title: "Call of Duty Mobile", fee: "₹299", prize: "₹9000", type: "Gaming", desc: "Engage in fast-paced combat matches to become the top team." },
+        { title: "BGMI", fee: "₹299", prize: "₹9000", type: "Gaming", desc: "Survive and compete in a battle royale to be the last team standing." },
+        { title: "Marketing Live", fee: "₹299", prize: "₹9000", type: "Marketing", desc: "Sell a product creatively within a limited time to impress judges." },
+        { title: "Photo Contest", fee: "₹499", prize: "₹15000", type: "Photography", desc: "Submit creative photos based on themes and compete for top prizes." },
+        { title: "Photo Scavenger Hunt", fee: "₹399", prize: "₹12000", type: "Puzzle / Team", desc: "Solve clues and capture photos to complete challenges and win." },
+        { title: "RC Car Racing", fee: "₹299", prize: "₹9000", type: "Racing", desc: "Race RC cars against opponents to reach the finish line first." },
+        { title: "Acting Competition", fee: "₹299", prize: "₹12000", type: "Acting", desc: "Perform short acts based on given scenarios with possible surprises." },
+        { title: "Escape Room", fee: "₹299", prize: "₹9000", type: "Adventure / Puzzle", desc: "Solve clues and escape a horror-themed room within a time limit." }
     ];
 
     const ibsEventsData = [
