@@ -295,7 +295,9 @@ document.addEventListener("DOMContentLoaded", () => {
         tech: [
             { name: "Space Quiz", price: 499 }, { name: "Videography Competition", price: 499 },
             { name: "Fit Fusion", price: 299 }, { name: "Art Expo Competition", price: 299 },
-            { name: "Aawaz", price: 299 }, { name: "Ritu", price: 499 },
+            { name: "Aawaz - Solo", price: 299 }, { name: "Aawaz - Duet", price: 399 },
+            { name: "Aawaz - Instrumental", price: 499 }, { name: "Aawaz - Group", price: 499 },
+            { name: "Ritu", price: 499 },
             { name: "Short Film Competition", price: 499 }, { name: "Reels Making Competition", price: 399 },
             { name: "Script Writing Competition", price: 299 }, { name: "Escape the Bud-Tech Maze", price: 399 },
             { name: "Valorant Tournament", price: 499 }, { name: "Call of Duty Mobile", price: 299 },
