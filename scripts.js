@@ -106,7 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     const architectureEventsData = [
-        { title: "Melody Mania", fee: "NIL", prize: "Exciting Prizes", type: "Singing / Music", desc: "Perform your favorite songs and enjoy a fun, energetic musical experience." },
         { title: "Crystal Canvas Art", fee: "₹99", prize: "Exciting Prizes", type: "Art / Craft", desc: "Create beautiful glass paintings using colors, light, and creative designs." },
         { title: "Rang De Matka", fee: "₹199", prize: "Exciting Prizes", type: "Art / Craft", desc: "Paint and decorate pots with vibrant colors and creative patterns." },
         { title: "Digital Doodles", fee: "₹199", prize: "Exciting Prizes", type: "Digital Art", desc: "Get a fun and personalized digital caricature highlighting your unique features." }
