@@ -881,7 +881,7 @@ body {
     /* Setting it exactly like the image where it has slight blue edges */
     max-width: 1900px;
     min-height: 100vh;
-    background-color: rgba(186, 34, 37, 0.75);
+    background-color: rgba(186, 34, 37, 0.60);
 
     /* Refined burnt orange/amber transparency */
     display: flex;
