@@ -2,36 +2,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ---- Typing Effect ----
     const typewriterElement = document.getElementById("typewriter");
-    const phrases = ["Registrations Open Now!"];
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
+    if (typewriterElement) {
+        const phrases = ["Registrations Open Now!"];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
 
-    function typeEffect() {
-        const currentPhrase = phrases[phraseIndex];
+        function typeEffect() {
+            const currentPhrase = phrases[phraseIndex];
 
-        if (isDeleting) {
-            charIndex--;
-        } else {
-            charIndex++;
+            if (isDeleting) {
+                charIndex--;
+            } else {
+                charIndex++;
+            }
+            typewriterElement.textContent = currentPhrase.substring(0, charIndex) + "_";
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
         }
-        typewriterElement.textContent = currentPhrase.substring(0, charIndex) + "_";
 
-        let typeSpeed = isDeleting ? 50 : 100;
-
-        if (!isDeleting && charIndex === currentPhrase.length) {
-            typeSpeed = 2000;
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            phraseIndex = (phraseIndex + 1) % phrases.length;
-            typeSpeed = 500;
-        }
-
-        setTimeout(typeEffect, typeSpeed);
+        setTimeout(typeEffect, 1000);
     }
-
-    setTimeout(typeEffect, 1000);
 
     // ---- Event Poster Modal Logic ----
     const posterModalMap = {
@@ -97,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const ibsEventsData = [
         { title: "Genesis", fee: "₹499", prize: "₹18,000", type: "Entrepreneurial", desc: "A competition to showcase innovative business ideas and problem-solving skills." },
-        { title: "Data Decode – “From Chaos to Clarity”", fee: "₹499", prize: "₹18,000", type: "Analytics Competition", desc: "Transform raw data into meaningful insights through analysis and decision-making." },
+        { title: "Data Decode – \u201CFrom Chaos to Clarity\u201D", fee: "₹499", prize: "₹18,000", type: "Analytics Competition", desc: "Transform raw data into meaningful insights through analysis and decision-making." },
         { title: "Marketkshetra", fee: "₹499", prize: "₹18,000", type: "Marketing Simulation", desc: "Design creative marketing campaigns for brands using strategy and innovation." },
         { title: "Idealogue", fee: "₹499", prize: "₹18,000", type: "Debate", desc: "A debate event testing communication through structured and impromptu rounds." },
         { title: "Bids & Bails", fee: "₹499", prize: "₹18,000", type: "Auction Simulation", desc: "Build a team through strategic bidding in an IPL-style auction game." },
@@ -146,10 +148,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="d-flex flex-column justify-content-center h-100" style="padding: ${slidePadding}; text-align: left; overflow-y: auto; overflow-x: hidden;">
                     <h2 style="font-size: ${titleFontSize}; margin-bottom: 1rem; font-family: 'DM Serif Display', serif; letter-spacing: 1px; color: ${textColor}; line-height: 1.2; ${titleWordBreak}">${e.title}</h2>
                     <ul style="list-style: none; padding: 0; margin: 0; font-size: ${bodyFontSize}; line-height: 1.6; color: ${textColor}; font-family: ${bodyFont};">
-                        ${e.fee ? `<li style="margin-bottom: 0.4rem;">• <strong>Registration Fee:</strong> ${e.fee}</li>` : ''}
-                        <li style="margin-bottom: 0.4rem;">• <strong>Pool Prize:</strong> ${e.prize}</li>
-                        <li style="margin-bottom: 0.4rem;">• <strong>Type:</strong> ${e.type}</li>
-                        <li style="margin-bottom: 0;">• <strong>Description:</strong> ${e.desc}</li>
+                        ${e.fee ? `<li style="margin-bottom: 0.4rem;">\u2022 <strong>Registration Fee:</strong> ${e.fee}</li>` : ''}
+                        <li style="margin-bottom: 0.4rem;">\u2022 <strong>Pool Prize:</strong> ${e.prize}</li>
+                        <li style="margin-bottom: 0.4rem;">\u2022 <strong>Type:</strong> ${e.type}</li>
+                        <li style="margin-bottom: 0;">\u2022 <strong>Description:</strong> ${e.desc}</li>
                     </ul>
                 </div>
             </div>
@@ -174,21 +176,32 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     };
 
-    const schoolEventDetailsMap = {
-        "law": generateCarouselHtml('lawEventCarousel', lawEventsData, false),
-        "tech": generateCarouselHtml('techEventCarousel', techEventsData, false, 'black'),
-        "ibs": generateCarouselHtml('ibsEventCarousel', ibsEventsData, true, null, {
+    // Lazy-generate carousel HTML only when needed (not all at once on page load)
+    const schoolCarouselConfigs = {
+        "law": () => generateCarouselHtml('lawEventCarousel', lawEventsData, false),
+        "tech": () => generateCarouselHtml('techEventCarousel', techEventsData, false, 'black'),
+        "ibs": () => generateCarouselHtml('ibsEventCarousel', ibsEventsData, true, null, {
             padding: '8% 18%',
             titleFontSize: 'clamp(1.4rem, 2.8vw, 2.2rem)',
             bodyFontSize: 'clamp(0.8rem, 1.3vw, 1rem)'
         }),
-        "socialScience": generateCarouselHtml('socialScienceEventCarousel', socialScienceEventsData, false, null, {
+        "socialScience": () => generateCarouselHtml('socialScienceEventCarousel', socialScienceEventsData, false, null, {
             padding: '8% 18%',
             titleFontSize: 'clamp(1.3rem, 2.5vw, 2rem)',
             bodyFontSize: 'clamp(0.75rem, 1.2vw, 0.95rem)'
         }),
-        "architecture": generateCarouselHtml('archEventCarousel', architectureEventsData, false, 'black')
+        "architecture": () => generateCarouselHtml('archEventCarousel', architectureEventsData, false, 'black')
     };
+
+    // Cache generated HTML to avoid regenerating on repeated opens
+    const carouselHtmlCache = {};
+
+    function getCarouselHtml(school) {
+        if (!carouselHtmlCache[school] && schoolCarouselConfigs[school]) {
+            carouselHtmlCache[school] = schoolCarouselConfigs[school]();
+        }
+        return carouselHtmlCache[school] || '';
+    }
 
     $('#posterModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -199,18 +212,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (posterModalMap[school]) {
             modal.find('#modalSchoolPoster').attr('src', posterModalMap[school]);
         }
-        if (schoolEventDetailsMap[school]) {
-            overlay.html(schoolEventDetailsMap[school]);
+
+        var carouselHtml = getCarouselHtml(school);
+        if (carouselHtml) {
+            overlay.html(carouselHtml);
 
             var carousel = overlay.find('.carousel');
             if (carousel.length > 0) {
-                // Initialize explicitly
                 carousel.carousel({
                     interval: 4000,
-                    pause: false // We handle pause manually
+                    pause: false
                 });
 
-                // Start CSS timer
                 carousel[0].style.setProperty('--story-duration', '4000ms');
 
                 var updateStoryProgress = function (activeIndex) {
@@ -221,19 +234,20 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (i < activeIndex) {
                             segment.addClass('completed');
                         } else if (i === activeIndex) {
-                            segment[0].offsetWidth; // force reflow
-                            segment.addClass('active');
+                            // Use rAF instead of forced reflow for restarting CSS animation
+                            requestAnimationFrame(function () {
+                                segment.addClass('active');
+                            });
                         }
                     });
                 };
 
-                updateStoryProgress(0); // init
+                updateStoryProgress(0);
 
                 carousel.on('slide.bs.carousel', function (e) {
                     updateStoryProgress(e.to);
                 });
 
-                // Prevent instant hover-pausing by tracking a flag
                 carousel.attr('data-can-pause', 'false');
 
                 carousel.on('mouseenter touchstart', function () {
@@ -253,12 +267,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Cleanly manage modal lifecycle to guarantee auto-sliding initializes fully
     $('#posterModal').on('shown.bs.modal', function () {
         var carousel = $(this).find('.carousel');
         if (carousel.length > 0) {
             carousel.attr('data-can-pause', 'true');
-            // Force cycle when modal is completely visible
             carousel.carousel('cycle');
             carousel.find('.story-progress-segment.active').removeClass('paused');
         }
@@ -267,30 +279,34 @@ document.addEventListener("DOMContentLoaded", () => {
     $('#posterModal').on('hidden.bs.modal', function () {
         var carousel = $(this).find('.carousel');
         if (carousel.length > 0) {
-            carousel.carousel('pause');
-            carousel.attr('data-can-pause', 'false');
+            carousel.carousel('dispose');
         }
+        // Clean up DOM to free memory
+        $(this).find('#modalTextOverlay').empty();
+        $(this).find('#modalSchoolPoster').attr('src', '');
     });
 
     // ---- Active Nav Dot on Scroll ----
     const sections = document.querySelectorAll('section[id], div[id="home"]');
     const navLinks = document.querySelectorAll(".side-nav a");
 
-    const navObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const id = entry.target.getAttribute("id");
-                navLinks.forEach((link) => {
-                    link.classList.toggle("active", link.getAttribute("href") === "#" + id);
-                });
-            }
+    if (sections.length > 0 && navLinks.length > 0) {
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute("id");
+                    navLinks.forEach((link) => {
+                        link.classList.toggle("active", link.getAttribute("href") === "#" + id);
+                    });
+                }
+            });
+        }, {
+            rootMargin: "-40% 0px -40% 0px",
+            threshold: 0
         });
-    }, {
-        rootMargin: "-40% 0px -40% 0px",
-        threshold: 0
-    });
 
-    sections.forEach((section) => navObserver.observe(section));
+        sections.forEach((section) => navObserver.observe(section));
+    }
 
     // ---- Event Data ----
     const events = {
@@ -307,7 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Escape Room", price: 299 }
         ],
         ibs: [
-            { name: "Genesis", price: 499 }, { name: "Data Decode – “From Chaos to Clarity”", price: 499 }, { name: "Marketkshetra", price: 499 },
+            { name: "Genesis", price: 499 }, { name: "Data Decode – \u201CFrom Chaos to Clarity\u201D", price: 499 }, { name: "Marketkshetra", price: 499 },
             { name: "Idealogue", price: 499 }, { name: "Bids & Bails", price: 499 }, { name: "Time Trap", price: 499 },
             { name: "Frame the Find", price: 499 }, { name: "FrameVerse (Short Video Competition)", price: 499 }
         ],
@@ -401,8 +417,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // ---- Render Logic ----
     function renderCentralEvents(filterSchool) {
         if (!centralDynamicCheckboxes) return;
-        centralDynamicCheckboxes.innerHTML = "";
-        if (centralStep1Total) centralStep1Total.textContent = "₹0";
+
+        // Build DOM in a fragment to avoid multiple reflows
+        var fragment = document.createDocumentFragment();
+        if (centralStep1Total) centralStep1Total.textContent = "\u20B90";
 
         const filtered = (filterSchool === "all" || !filterSchool)
             ? ALL_EVENTS
@@ -420,7 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 header.className = "central-school-group-header";
                 header.style.cssText = "font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#EAD7C5;padding:8px 12px 4px;border-top:1px solid rgba(255,255,255,0.1);margin-top:6px;";
                 header.textContent = schoolLabels[schoolKey] || schoolKey;
-                centralDynamicCheckboxes.appendChild(header);
+                fragment.appendChild(header);
             }
 
             grouped[schoolKey].forEach((event, idx) => {
@@ -432,11 +450,15 @@ document.addEventListener("DOMContentLoaded", () => {
                         value="${event.price}" data-name="${event.name}" data-school="${event.schoolLabel}" id="${inputId}">
                     <label class="form-check-label d-flex justify-content-between w-100" for="${inputId}">
                         <span>${event.name}<small style="display:block;color:rgba(243,240,224,0.5);font-size:0.78rem;">${event.schoolLabel}</small></span>
-                        <span class="font-weight-bold">₹${event.price}</span>
+                        <span class="font-weight-bold">\u20B9${event.price}</span>
                     </label>`;
-                centralDynamicCheckboxes.appendChild(div);
+                fragment.appendChild(div);
             });
         });
+
+        // Single DOM write instead of many appendChild calls
+        centralDynamicCheckboxes.innerHTML = "";
+        centralDynamicCheckboxes.appendChild(fragment);
     }
 
     function updateCentralStep1Total() {
@@ -444,7 +466,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(".central-event-checkbox:checked").forEach((cb) => {
             total += parseInt(cb.value, 10);
         });
-        if (centralStep1Total) centralStep1Total.textContent = `₹${total}`;
+        if (centralStep1Total) centralStep1Total.textContent = `\u20B9${total}`;
         return total;
     }
 
@@ -506,13 +528,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p class="success-subtitle">Your registration has been successfully processed.</p>
                 <div class="success-details">
                     <div class="small text-muted mb-1">Total Amount</div>
-                    <div class="success-amt">₹${amount}</div>
+                    <div class="success-amt">\u20B9${amount}</div>
                 </div>
                 <button class="close-success-btn">Back to Home</button>
             </div>`;
 
         document.body.appendChild(overlay);
-        setTimeout(() => overlay.classList.add("active"), 10);
+        requestAnimationFrame(() => overlay.classList.add("active"));
 
         overlay.querySelector(".close-success-btn").onclick = () => {
             overlay.classList.remove("active");
@@ -552,7 +574,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
             if (centralSummaryCount) centralSummaryCount.textContent = checked.length;
-            if (centralStep2Total) centralStep2Total.textContent = `₹${updateCentralStep1Total()}`;
+            if (centralStep2Total) centralStep2Total.textContent = `\u20B9${updateCentralStep1Total()}`;
             centralStep1Events.style.display = "none";
             centralStep2Registration.style.display = "block";
             window.scrollTo(0, 0);

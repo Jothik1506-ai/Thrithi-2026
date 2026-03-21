@@ -45,7 +45,6 @@ body {
     opacity: 0;
     /* Synchronized to start as the logo moves */
     animation: contentSlideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.0s forwards;
-    will-change: transform, opacity;
 }
 
 @keyframes contentSlideUp {
@@ -576,7 +575,6 @@ body {
     font-size: 1.8rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
-    font-family: 'Space Grotesk', sans-serif;
 }
 
 .success-subtitle {
@@ -658,6 +656,10 @@ body {
 .soc-final-section,
 .arch-final-section {
     position: relative;
+    /* Skip rendering of offscreen sections — eliminates background-attachment:fixed
+       repaint cost for sections not currently in the viewport */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 100vh;
 }
 
 .section-logo {
@@ -727,7 +729,6 @@ body {
     color: #FFFFFF;
     font-size: 1.05rem;
     line-height: 1.8;
-    font-family: 'Space Grotesk', sans-serif;
     font-weight: 500;
     margin-bottom: 3rem;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
@@ -819,7 +820,6 @@ body {
     color: #FFFFFF;
     font-size: 1.05rem;
     line-height: 1.8;
-    font-family: 'Space Grotesk', sans-serif;
     font-weight: 500;
     margin-bottom: 3rem;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
@@ -913,7 +913,6 @@ body {
     color: #FFFFFF;
     font-size: 1.05rem;
     line-height: 1.8;
-    font-family: 'Space Grotesk', sans-serif;
     font-weight: 500;
     margin-bottom: 3rem;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
@@ -1005,7 +1004,6 @@ body {
     color: #FFFFFF;
     font-size: 1.05rem;
     line-height: 1.8;
-    font-family: 'Space Grotesk', sans-serif;
     font-weight: 500;
     margin-bottom: 3rem;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
@@ -1095,7 +1093,6 @@ body {
     color: #FFFFFF;
     font-size: 1.05rem;
     line-height: 1.8;
-    font-family: 'Space Grotesk', sans-serif;
     font-weight: 500;
     margin-bottom: 3rem;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
@@ -1181,7 +1178,6 @@ body {
     font-size: 1rem;
     font-weight: 700;
     color: #641D36;
-    font-family: 'Space Grotesk', sans-serif;
     line-height: 1.4;
     padding-top: 0.3rem;
 }
@@ -1203,7 +1199,6 @@ body {
     font-size: 0.85rem;
     font-weight: 700;
     color: #641D36;
-    font-family: 'Space Grotesk', sans-serif;
     font-style: italic;
 }
 
@@ -1213,7 +1208,6 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-family: 'Space Grotesk', sans-serif;
     opacity: 0.85;
 }
 
@@ -1246,14 +1240,12 @@ body {
     font-weight: 700;
     color: #F3F0E0;
     margin-bottom: 1rem;
-    font-family: 'Space Grotesk', sans-serif;
 }
 
 .footer-col-text {
     font-size: 0.8rem;
     color: rgba(243, 240, 224, 0.8);
     line-height: 1.7;
-    font-family: 'Space Grotesk', sans-serif;
 }
 
 .footer-social {
@@ -1265,7 +1257,6 @@ body {
 .footer-follow {
     font-size: 0.8rem;
     color: rgba(243, 240, 224, 0.8);
-    font-family: 'Space Grotesk', sans-serif;
 }
 
 .footer-social-icon {
@@ -1285,7 +1276,6 @@ body {
     gap: 0.6rem;
     color: #F3F0E0;
     font-size: 0.9rem;
-    font-family: 'Space Grotesk', sans-serif;
 }
 
 .footer-location i {
@@ -1310,14 +1300,12 @@ body {
     font-size: 1rem;
     font-weight: 700;
     color: #F3F0E0;
-    font-family: 'Space Grotesk', sans-serif;
     margin: 0;
 }
 
 .footer-copy {
     font-size: 0.75rem;
     color: rgba(243, 240, 224, 0.65);
-    font-family: 'Space Grotesk', sans-serif;
     margin: 0;
 }
 
