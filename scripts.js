@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { title: "Videography Competition", fee: "₹499", prize: "₹15000", type: "Videography / Online", desc: "Create and submit a short video, with winners decided based on online likes." },
         { title: "Fit Fusion", fee: "₹299", prize: "₹12000", type: "Fun / Games", desc: "Participate in engaging table games that test coordination and fun skills." },
         { title: "Art Expo Competition", fee: "₹299", prize: "₹9000", type: "Art", desc: "Showcase your artwork creatively and compete to win prizes." },
-        { title: "Aawaz", fee: "₹299–₹499", prize: "Exciting Prizes", type: "Music Competition", desc: "Perform solo, duet, instrumental, or group music acts on an open stage." },
+        { title: "Aawaz", fee: "₹299–₹499", prize: "51000", type: "Music Competition", desc: "An open stage for show casing your musical talent.<br>*Perform solo <br>*Perform Duet <br>*Perform instrumental <br>*Perform with a group "  },
         { title: "Ritu", fee: "₹499", prize: "₹15000", type: "Music Quiz", desc: "Test your knowledge of music theory and musical concepts through a quiz." },
         { title: "Short Film Competition", fee: "₹499", prize: "₹15000", type: "Filmmaking", desc: "Create and present a short film showcasing your storytelling skills." },
         { title: "Reels Making Competition", fee: "₹399", prize: "₹12000", type: "Video Creation", desc: "Make engaging reels under 2 minutes with creative content." },
