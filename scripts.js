@@ -323,8 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Extempore Moot Court", price: 499 }, { name: "Shabd Sangram (Debate)", price: 499 },
             { name: "Treble Quest", price: 399 }, { name: "The Web of Lies", price: 399 },
             { name: "Monopoly - The Bargain Battle", price: 399 }, { name: "Journal/Vision Board", price: 399 },
-            { name: "Tote Bag Painting", price: 399 }, { name: "Chamber of Seven Sins", price: 299 },
-            { name: "Eco Art (Painting)", price: 0 }
+            { name: "Tote Bag Painting", price: 399 }, { name: "Chamber of Seven Sins", price: 299 }
         ],
         socialScience: [
             { name: "Vox Populi: Mock Parliament", price: 499 },
@@ -333,7 +332,6 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Canvas Carnival 2.0", price: 299 }
         ],
         architecture: [
-            { name: "Melody Mania", price: 0 },
             { name: "Crystal Canvas Art", price: 99 },
             { name: "Rang De Matka", price: 199 },
             { name: "Digital Doodles", price: 199 }
