@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const socialScienceEventsData = [
         { title: "Vox Populi: Mock Parliament", fee: "₹499", prize: "₹18,000", type: "Debate / Simulation", desc: "Experience a real parliamentary setup by debating policies and presenting arguments like MPs." },
-        { title: "Finovate", fee: "₹399", prize: "₹15,000", type: "Finance / Innovation", desc: "Pitch creative financial ideas to solve real-world problems with strategy and impact." },
+        { title: "Finnovate", fee: "₹399", prize: "₹15,000", type: "Finance / Innovation", desc: "Pitch creative financial ideas to solve real-world problems with strategy and impact." },
         { title: "The Profiling Room: Where Behaviour Becomes Evidence", fee: "₹399", prize: "₹15,000", type: "Psychology / Detective", desc: "Analyze clues and behavior to solve a crime using logical reasoning and psychological insights." },
         { title: "Canvas Carnival 2.0", fee: "₹299", prize: "₹12,000", type: "Art Competition", desc: "Create a painting on the spot based on a surprise theme and present your idea." }
     ];
@@ -328,7 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ],
         socialScience: [
             { name: "Vox Populi: Mock Parliament", price: 499 },
-            { name: "Finovate", price: 399 },
+            { name: "Finnovate", price: 399 },
             { name: "The Profiling Room: Where Behaviour Becomes Evidence", price: 399 },
             { name: "Canvas Carnival 2.0", price: 299 }
         ],
