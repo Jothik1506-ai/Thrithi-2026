@@ -405,11 +405,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const centralBtnBack = document.getElementById("centralBtnBackToEvents");
     const centralForm = document.getElementById("centralRegistrationForm");
 
+    // Persistent state for selected events
+    const selectedEventsMap = new Map();
+
     // ---- Render Logic ----
     function renderCentralEvents(filterSchool) {
         if (!centralDynamicCheckboxes) return;
         centralDynamicCheckboxes.innerHTML = "";
-        if (centralStep1Total) centralStep1Total.textContent = "₹0";
+        // Don't reset total amount here anymore, as it's now persistent
 
         const filtered = (filterSchool === "all" || !filterSchool)
             ? ALL_EVENTS
@@ -434,9 +437,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 const div = document.createElement("div");
                 div.className = "form-check custom-checkbox mb-2";
                 const inputId = `central-event-${schoolKey}-${idx}`;
+                const eventKey = `${schoolKey}|${event.name}`;
+                const isChecked = selectedEventsMap.has(eventKey);
+
                 div.innerHTML = `
                     <input class="form-check-input central-event-checkbox" type="checkbox"
-                        value="${event.price}" data-name="${event.name}" data-school="${event.schoolLabel}" id="${inputId}">
+                        value="${event.price}" data-name="${event.name}" data-school="${event.schoolLabel}" 
+                        data-school-key="${schoolKey}" id="${inputId}" ${isChecked ? 'checked' : ''}>
                     <label class="form-check-label d-flex justify-content-between w-100" for="${inputId}">
                         <span>${event.name}<small style="display:block;color:rgba(243,240,224,0.5);font-size:0.78rem;">${event.schoolLabel}</small></span>
                         <span class="font-weight-bold">₹${event.price}</span>
@@ -448,18 +455,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateCentralStep1Total() {
         let total = 0;
-        document.querySelectorAll(".central-event-checkbox:checked").forEach((cb) => {
-            total += parseInt(cb.value, 10);
+        selectedEventsMap.forEach((event) => {
+            total += event.price;
         });
         if (centralStep1Total) centralStep1Total.textContent = `₹${total}`;
         return total;
     }
 
     function getCentralSelectedEvents() {
-        return Array.from(document.querySelectorAll(".central-event-checkbox:checked")).map((cb) => ({
-            eventName: cb.getAttribute("data-name"),
-            school: cb.getAttribute("data-school"),
-            amount: parseInt(cb.value, 10)
+        return Array.from(selectedEventsMap.values()).map((event) => ({
+            eventName: event.name,
+            school: event.schoolLabel,
+            amount: event.price
         }));
     }
 
@@ -541,7 +548,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (centralDynamicCheckboxes) {
         centralDynamicCheckboxes.addEventListener("change", (e) => {
-            if (e.target.classList.contains("central-event-checkbox")) updateCentralStep1Total();
+            if (e.target.classList.contains("central-event-checkbox")) {
+                const cb = e.target;
+                const eventName = cb.getAttribute("data-name");
+                const schoolKey = cb.getAttribute("data-school-key");
+                const key = `${schoolKey}|${eventName}`;
+
+                if (cb.checked) {
+                    selectedEventsMap.set(key, {
+                        name: eventName,
+                        price: parseInt(cb.value, 10),
+                        schoolLabel: cb.getAttribute("data-school"),
+                        schoolKey: schoolKey
+                    });
+                } else {
+                    selectedEventsMap.delete(key);
+                }
+                updateCentralStep1Total();
+            }
         });
     }
 
@@ -553,12 +577,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (centralBtnProceed) {
         centralBtnProceed.addEventListener("click", () => {
-            const checked = document.querySelectorAll(".central-event-checkbox:checked");
-            if (checked.length === 0) {
+            if (selectedEventsMap.size === 0) {
                 showAlert("Please select an event.", "danger");
                 return;
             }
-            if (centralSummaryCount) centralSummaryCount.textContent = checked.length;
+            if (centralSummaryCount) centralSummaryCount.textContent = selectedEventsMap.size;
             if (centralStep2Total) centralStep2Total.textContent = `₹${updateCentralStep1Total()}`;
             centralStep1Events.style.display = "none";
             centralStep2Registration.style.display = "block";
