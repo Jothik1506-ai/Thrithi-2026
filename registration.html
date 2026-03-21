@@ -5,16 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thrithi 2026 - Centralized Registration</title>
+    <link rel="icon" href="Images/Logos/favicon_black_32x32.png" type="image/png">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300..700&display=swap"
+        rel="stylesheet">
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/4bac6d041c.js" crossorigin="anonymous" async></script>
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.0">
 
     <style>
         /* Standalone Registration Page Overrides */
@@ -86,6 +90,13 @@
 
         .registration-card-body {
             padding: 2rem;
+        }
+
+        /* iOS Safari does not support background-attachment:fixed */
+        @media (max-width: 768px) {
+            .registration-page-body {
+                background-attachment: scroll;
+            }
         }
     </style>
 </head>

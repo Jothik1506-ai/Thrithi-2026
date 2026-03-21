@@ -61,9 +61,11 @@ body {
 
 /* Brand Section */
 .top-left-logo {
+    --logo-top: 40px;
+    --logo-left: 50px;
     position: absolute;
-    top: 40px;
-    left: 50px;
+    top: var(--logo-top);
+    left: var(--logo-left);
     z-index: 10;
     /* Synchronized duration: 1.0s pause + 1.2s movement = 2.2s */
     animation: logoIntro 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -71,18 +73,18 @@ body {
 
 @keyframes logoIntro {
     0% {
-        transform: translate(calc(50vw - 50px - 50%), calc(50vh - 40px - 50%)) scale(1.5);
+        transform: translate(calc(50vw - var(--logo-left) - 50%), calc(50vh - var(--logo-top) - 50%)) scale(1.5);
         opacity: 0;
     }
 
     20% {
         opacity: 1;
-        transform: translate(calc(50vw - 50px - 50%), calc(50vh - 40px - 50%)) scale(1.5);
+        transform: translate(calc(50vw - var(--logo-left) - 50%), calc(50vh - var(--logo-top) - 50%)) scale(1.5);
     }
 
     45% {
         opacity: 1;
-        transform: translate(calc(50vw - 50px - 50%), calc(50vh - 40px - 50%)) scale(1.5);
+        transform: translate(calc(50vw - var(--logo-left) - 50%), calc(50vh - var(--logo-top) - 50%)) scale(1.5);
     }
 
     100% {
@@ -274,6 +276,13 @@ body {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    .top-left-logo {
+        --logo-top: 20px;
+        --logo-left: 20px;
+        top: var(--logo-top);
+        left: var(--logo-left);
+    }
+
     .brand-logo {
         height: 55px;
     }
@@ -1412,6 +1421,20 @@ body {
         width: 100%;
     }
 }
+/* Ensure poster modal fits small screens without overflow */
+@media (max-width: 576px) {
+    #posterModal .modal-dialog {
+        max-width: 95vw !important;
+        margin: 0.5rem auto;
+    }
+
+    #posterModal .modal-body .close {
+        top: -5px !important;
+        right: -5px !important;
+        font-size: 2rem !important;
+    }
+}
+
 /* Fix mobile button collision (Register Now & Brochure) */
 @media (max-width: 576px) {
     .register-container {

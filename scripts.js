@@ -2,36 +2,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ---- Typing Effect ----
     const typewriterElement = document.getElementById("typewriter");
-    const phrases = ["Registrations Open Now!"];
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
+    if (typewriterElement) {
+        const phrases = ["Registrations Open Now!"];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
 
-    function typeEffect() {
-        const currentPhrase = phrases[phraseIndex];
+        function typeEffect() {
+            const currentPhrase = phrases[phraseIndex];
 
-        if (isDeleting) {
-            charIndex--;
-        } else {
-            charIndex++;
+            if (isDeleting) {
+                charIndex--;
+            } else {
+                charIndex++;
+            }
+            typewriterElement.textContent = currentPhrase.substring(0, charIndex) + "_";
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
         }
-        typewriterElement.textContent = currentPhrase.substring(0, charIndex) + "_";
 
-        let typeSpeed = isDeleting ? 50 : 100;
-
-        if (!isDeleting && charIndex === currentPhrase.length) {
-            typeSpeed = 2000;
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            phraseIndex = (phraseIndex + 1) % phrases.length;
-            typeSpeed = 500;
-        }
-
-        setTimeout(typeEffect, typeSpeed);
+        setTimeout(typeEffect, 1000);
     }
-
-    setTimeout(typeEffect, 1000);
 
     // ---- Event Poster Modal Logic ----
     const posterModalMap = {
@@ -49,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
         { title: "BGMI Tournament", fee: "₹499", prize: "₹18,000", type: "Gaming", desc: "Compete in intense BGMI battle royale matches." },
         { title: "FIFA Tournament", fee: "₹299", prize: "₹15,000", type: "Gaming", desc: "Play competitive football matches in FIFA." },
         { title: "Clash Royale Tournament", fee: "₹199", prize: "₹12,000", type: "Gaming", desc: "Battle opponents using strategy in Clash Royale." },
-        { title: "Eco Art (Painting)", fee: "NIL", prize: "₹10,000", type: "Art", desc: "Create eco-friendly themed artwork." },
         { title: "Poster Making Competition", fee: "₹499", prize: "Participation-based", type: "Design", desc: "Design creative posters based on themes." },
         { title: "Meme Making Competition", fee: "₹299", prize: "₹12,000", type: "Creative", desc: "Create funny and relatable memes." },
         { title: "Postcard Making", fee: "₹399", prize: "₹12,000", type: "Art & Craft", desc: "Design creative and unique postcards." },
@@ -597,7 +598,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("Registration flow failed:", err);
                 showAlert("Submission failed. Please try again.", "danger");
                 btn.disabled = false;
-                btn.innerHTML = "Submit &amp; Pay";
+                btn.innerHTML = "Submit & Pay";
             }
         });
     }
