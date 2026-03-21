@@ -1412,3 +1412,16 @@ body {
         width: 100%;
     }
 }
+/* Fix mobile button collision (Register Now & Brochure) */
+@media (max-width: 576px) {
+    .register-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .register-btn.ml-3 {
+        margin-left: 0 !important;
+    }
+}
