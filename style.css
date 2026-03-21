@@ -739,12 +739,14 @@ body {
     color: #FFFFFF;
     font-family: "Times New Roman", Times, serif;
     font-size: 1.2rem;
+    font-weight: 400;
     letter-spacing: 1px;
-    padding: 10px 40px;
-    border-radius: 25px;
+    padding: 12px 45px;
+    border-radius: 30px;
     border: 2px solid rgba(255, 255, 255, 0.6);
     transition: transform 0.3s ease, background 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-transform: capitalize;
 }
 
 .law-final-btn:hover {
@@ -827,15 +829,16 @@ body {
     background-color: rgba(25, 75, 105, 0.85);
     /* Dark blue matching the section background */
     color: #FFFFFF;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Times New Roman", Times, serif;
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: 1px;
-    padding: 10px 40px;
-    border-radius: 25px;
+    padding: 12px 45px;
+    border-radius: 30px;
     border: 2px solid rgba(255, 255, 255, 0.6);
     transition: transform 0.3s ease, background 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-transform: capitalize;
 }
 
 .fst-final-btn:hover {
@@ -922,12 +925,14 @@ body {
     color: #FFFFFF;
     font-family: "Times New Roman", Times, serif;
     font-size: 1.2rem;
+    font-weight: 400;
     letter-spacing: 1px;
-    padding: 10px 40px;
-    border-radius: 25px;
+    padding: 12px 45px;
+    border-radius: 30px;
     border: 2px solid rgba(255, 255, 255, 0.6);
     transition: transform 0.3s ease, background 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-transform: capitalize;
 }
 
 .ibs-final-btn:hover {
@@ -1012,12 +1017,14 @@ body {
     color: #FFFFFF;
     font-family: "Times New Roman", Times, serif;
     font-size: 1.2rem;
+    font-weight: 400;
     letter-spacing: 1px;
-    padding: 10px 40px;
-    border-radius: 25px;
+    padding: 12px 45px;
+    border-radius: 30px;
     border: 2px solid rgba(255, 255, 255, 0.6);
     transition: transform 0.3s ease, background 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-transform: capitalize;
 }
 
 .soc-final-btn:hover {
@@ -1100,12 +1107,14 @@ body {
     color: #FFFFFF;
     font-family: "Times New Roman", Times, serif;
     font-size: 1.2rem;
+    font-weight: 400;
     letter-spacing: 1px;
-    padding: 10px 40px;
-    border-radius: 25px;
+    padding: 12px 45px;
+    border-radius: 30px;
     border: 2px solid rgba(255, 255, 255, 0.6);
     transition: transform 0.3s ease, background 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-transform: capitalize;
 }
 
 .arch-final-btn:hover {
