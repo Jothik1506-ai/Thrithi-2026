@@ -35,11 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ---- Event Poster Modal Logic ----
     const posterModalMap = {
-        "law": "Images/Event Temp Images Used css/Law Final template.png",
-        "tech": "Images/Event Temp Images Used css/FST Final template.png",
-        "ibs": "Images/Event Temp Images Used css/IBS events template 1.png",
-        "socialScience": "Images/Event Temp Images Used css/SOSs Final template.png",
-        "architecture": "Images/Event Temp Images Used css/Arch Final template.png"
+        "law": "Images/Event Temp Images Used css/Law Final template.webp",
+        "tech": "Images/Event Temp Images Used css/FST Final template.webp",
+        "ibs": "Images/Event Temp Images Used css/IBS events template 1.webp",
+        "socialScience": "Images/Event Temp Images Used css/SOSs Final template.webp",
+        "architecture": "Images/Event Temp Images Used css/Arch Final template.webp"
     };
 
     const lawEventsData = [
