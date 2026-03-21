@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyxN5QR3mU2W7wqUpcQhgW1OiMDYP-K7_BBNgJx16gdZPjKaUNdObNdJcHTIUjw61it/exec";
 
     // ---- Typing Effect ----
     const typewriterElement = document.getElementById("typewriter");
@@ -74,6 +73,28 @@ document.addEventListener("DOMContentLoaded", () => {
         { title: "Chamber of Seven Sins", fee: "₹299", prize: "₹12,000", type: "Themed Event", desc: "Experience a game based on the seven deadly sins theme." }
     ];
 
+    const techEventsData = [
+        { title: "Space Quiz", fee: "₹499", prize: "Exciting Prizes", type: "Quiz / Space", desc: "A team quiz testing knowledge about space, rockets, and astronomy." },
+        { title: "Videography Competition", fee: "₹499", prize: "Exciting Prizes", type: "Videography / Online", desc: "Create and submit a short video, with winners decided based on online likes." },
+        { title: "Fit Fusion", fee: "₹299", prize: "Exciting Prizes", type: "Fun / Games", desc: "Participate in engaging table games that test coordination and fun skills." },
+        { title: "Art Expo Competition", fee: "₹299", prize: "Exciting Prizes", type: "Art", desc: "Showcase your artwork creatively and compete to win prizes." },
+        { title: "Aawaz", fee: "₹299–₹499", prize: "Exciting Prizes", type: "Music Competition", desc: "Perform solo, duet, instrumental, or group music acts on an open stage." },
+        { title: "Ritu", fee: "₹499", prize: "Exciting Prizes", type: "Music Quiz", desc: "Test your knowledge of music theory and musical concepts through a quiz." },
+        { title: "Short Film Competition", fee: "₹499", prize: "Exciting Prizes", type: "Filmmaking", desc: "Create and present a short film showcasing your storytelling skills." },
+        { title: "Reels Making Competition", fee: "₹399", prize: "Exciting Prizes", type: "Video Creation", desc: "Make engaging reels under 2 minutes with creative content." },
+        { title: "Script Writing Competition", fee: "₹299", prize: "Exciting Prizes", type: "Writing", desc: "Write an interesting and creative script for a cinematic concept." },
+        { title: "Escape the Bud-Tech Maze", fee: "₹399", prize: "Exciting Prizes", type: "Tech / Puzzle", desc: "Solve coding and tech-based challenges to progress through levels." },
+        { title: "Valorant Tournament", fee: "₹499", prize: "Exciting Prizes", type: "Gaming", desc: "Compete in a 5v5 tactical shooter to outplay and defeat opponents." },
+        { title: "Call of Duty Mobile", fee: "₹299", prize: "Exciting Prizes", type: "Gaming", desc: "Engage in fast-paced combat matches to become the top team." },
+        { title: "BGMI", fee: "₹299", prize: "Exciting Prizes", type: "Gaming", desc: "Survive and compete in a battle royale to be the last team standing." },
+        { title: "Marketing Live", fee: "₹299", prize: "Exciting Prizes", type: "Marketing", desc: "Sell a product creatively within a limited time to impress judges." },
+        { title: "Photo Contest", fee: "₹499", prize: "Exciting Prizes", type: "Photography", desc: "Submit creative photos based on themes and compete for top prizes." },
+        { title: "Photo Scavenger Hunt", fee: "₹399", prize: "Exciting Prizes", type: "Puzzle / Team", desc: "Solve clues and capture photos to complete challenges and win." },
+        { title: "RC Car Racing", fee: "₹299", prize: "Exciting Prizes", type: "Racing", desc: "Race RC cars against opponents to reach the finish line first." },
+        { title: "Acting Competition", fee: "₹299", prize: "Exciting Prizes", type: "Acting", desc: "Perform short acts based on given scenarios with possible surprises." },
+        { title: "Escape Room", fee: "₹299", prize: "Exciting Prizes", type: "Adventure / Puzzle", desc: "Solve clues and escape a horror-themed room within a time limit." }
+    ];
+
     const ibsEventsData = [
         { title: "Genesis", fee: "₹499", prize: "₹18,000", type: "Entrepreneurial", desc: "A competition to showcase innovative business ideas and problem-solving skills." },
         { title: "Data Decode – “From Chaos to Clarity”", fee: "₹499", prize: "₹18,000", type: "Analytics Competition", desc: "Transform raw data into meaningful insights through analysis and decision-making." },
@@ -85,31 +106,50 @@ document.addEventListener("DOMContentLoaded", () => {
         { title: "FrameVerse (Short Video Competition)", fee: "₹499", prize: "₹18,000", type: "Short Film / Video", desc: "Produce a short cinematic video within a limited timeframe." }
     ];
 
-    const generateCarouselHtml = (carouselId, eventsList, isLight = false) => {
-        const textColor = isLight ? '#FFFFFF' : '#F5F5DC';
+    const architectureEventsData = [
+        { title: "Melody Mania", fee: "NIL", prize: "Exciting Prizes", type: "Singing / Music", desc: "Perform your favorite songs and enjoy a fun, energetic musical experience." },
+        { title: "Crystal Canvas Art", fee: "₹99", prize: "Exciting Prizes", type: "Art / Craft", desc: "Create beautiful glass paintings using colors, light, and creative designs." },
+        { title: "Rang De Matka", fee: "₹199", prize: "Exciting Prizes", type: "Art / Craft", desc: "Paint and decorate pots with vibrant colors and creative patterns." },
+        { title: "Digital Doodles", fee: "₹199", prize: "Exciting Prizes", type: "Digital Art", desc: "Get a fun and personalized digital caricature highlighting your unique features." }
+    ];
+
+    const socialScienceEventsData = [
+        { title: "Vox Populi: Mock Parliament", fee: "₹499", prize: "Exciting Prizes", type: "Debate / Simulation", desc: "Experience a real parliamentary setup by debating policies and presenting arguments like MPs." },
+        { title: "Finovate", fee: "₹399", prize: "Exciting Prizes", type: "Finance / Innovation", desc: "Pitch creative financial ideas to solve real-world problems with strategy and impact." },
+        { title: "The Profiling Room: Where Behaviour Becomes Evidence", fee: "₹399", prize: "Exciting Prizes", type: "Psychology / Detective", desc: "Analyze clues and behavior to solve a crime using logical reasoning and psychological insights." },
+        { title: "Canvas Carnival 2.0", fee: "₹299", prize: "Exciting Prizes", type: "Art Competition", desc: "Create a painting on the spot based on a surprise theme and present your idea." }
+    ];
+
+    const generateCarouselHtml = (carouselId, eventsList, isLight = false, customColor = null, styleOverrides = {}) => {
+        const textColor = customColor || (isLight ? '#FFFFFF' : '#F5F5DC');
         const bodyFont = isLight ? 'inherit' : "'DM Serif Display', serif";
         const bgStyle = '';
-        const controlFilter = 'filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));';
+        const controlFilter = customColor === '#000000' || customColor === 'black' ? 'filter: drop-shadow(2px 2px 4px rgba(255,255,255,0.8));' : 'filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));';
 
         const progressHtml = `
             <div class="story-progress-container d-flex position-absolute w-100" style="top: 13%; left: 0; padding: 0 20%; z-index: 1050; gap: 4px;">
                 ${eventsList.map((_, index) => `
-                    <div class="story-progress-segment" data-target="#${carouselId}" data-slide-to="${index}" ${isLight ? 'style="background-color: rgba(255,255,255,0.3);"' : ''}>
-                        <div class="story-progress-fill" ${isLight ? 'style="background-color: #FFFFFF;"' : ''}></div>
+                    <div class="story-progress-segment" data-target="#${carouselId}" data-slide-to="${index}" ${isLight ? 'style="background-color: rgba(255,255,255,0.3);"' : (customColor === 'black' ? 'style="background-color: rgba(0,0,0,0.3);"' : '')}>
+                        <div class="story-progress-fill" ${isLight ? 'style="background-color: #FFFFFF;"' : (customColor === 'black' ? 'style="background-color: #000000;"' : '')}></div>
                     </div>
                 `).join('')}
             </div>
         `;
 
+        const slidePadding = styleOverrides.padding || '8% 15%';
+        const titleFontSize = styleOverrides.titleFontSize || 'clamp(1.8rem, 3.5vw, 3rem)';
+        const bodyFontSize = styleOverrides.bodyFontSize || 'clamp(0.85rem, 1.4vw, 1.1rem)';
+        const titleWordBreak = styleOverrides.wordBreak ? 'word-break: break-word; overflow-wrap: break-word;' : '';
+
         const slidesHtml = eventsList.map((e, index) => `
             <div class="carousel-item ${index === 0 ? 'active' : ''} w-100 h-100" data-interval="4000">
-                <div class="d-flex flex-column justify-content-center h-100" style="padding: 16% 20%; text-align: left;">
-                    <h2 style="font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 1.5rem; font-family: 'DM Serif Display', serif; letter-spacing: 1px; color: ${isLight ? '#FFFFFF' : textColor};">${e.title}</h2>
-                    <ul style="list-style: none; padding: 0; margin: 0; font-size: clamp(1rem, 1.8vw, 1.4rem); line-height: 1.8; color: ${textColor}; font-family: ${bodyFont};">
-                        ${e.fee ? `<li style="margin-bottom: 0.5rem;">• <strong>Registration Fee:</strong> ${e.fee}</li>` : ''}
-                        <li style="margin-bottom: 0.5rem;">• <strong>Pool Prize:</strong> ${e.prize}</li>
-                        <li style="margin-bottom: 0.5rem;">• <strong>Type:</strong> ${e.type}</li>
-                        <li>• <strong>Description:</strong> ${e.desc}</li>
+                <div class="d-flex flex-column justify-content-center h-100" style="padding: ${slidePadding}; text-align: left; overflow-y: auto; overflow-x: hidden;">
+                    <h2 style="font-size: ${titleFontSize}; margin-bottom: 1rem; font-family: 'DM Serif Display', serif; letter-spacing: 1px; color: ${textColor}; line-height: 1.2; ${titleWordBreak}">${e.title}</h2>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: ${bodyFontSize}; line-height: 1.6; color: ${textColor}; font-family: ${bodyFont};">
+                        ${e.fee ? `<li style="margin-bottom: 0.4rem;">• <strong>Registration Fee:</strong> ${e.fee}</li>` : ''}
+                        <li style="margin-bottom: 0.4rem;">• <strong>Pool Prize:</strong> ${e.prize}</li>
+                        <li style="margin-bottom: 0.4rem;">• <strong>Type:</strong> ${e.type}</li>
+                        <li style="margin-bottom: 0;">• <strong>Description:</strong> ${e.desc}</li>
                     </ul>
                 </div>
             </div>
@@ -136,7 +176,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const schoolEventDetailsMap = {
         "law": generateCarouselHtml('lawEventCarousel', lawEventsData, false),
-        "ibs": generateCarouselHtml('ibsEventCarousel', ibsEventsData, true)
+        "tech": generateCarouselHtml('techEventCarousel', techEventsData, false, 'black'),
+        "ibs": generateCarouselHtml('ibsEventCarousel', ibsEventsData, true, null, {
+            padding: '8% 18%',
+            titleFontSize: 'clamp(1.4rem, 2.8vw, 2.2rem)',
+            bodyFontSize: 'clamp(0.8rem, 1.3vw, 1rem)'
+        }),
+        "socialScience": generateCarouselHtml('socialScienceEventCarousel', socialScienceEventsData, false, null, {
+            padding: '8% 18%',
+            titleFontSize: 'clamp(1.3rem, 2.5vw, 2rem)',
+            bodyFontSize: 'clamp(0.75rem, 1.2vw, 0.95rem)'
+        }),
+        "architecture": generateCarouselHtml('archEventCarousel', architectureEventsData, false, 'black')
     };
 
     $('#posterModal').on('show.bs.modal', function (event) {
@@ -244,17 +295,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // ---- Event Data ----
     const events = {
         tech: [
-            { name: "Open Mic", price: 299 }, { name: "Snap Verse", price: 299 }, { name: "Mini Games", price: 199 },
-            { name: "Control Cup", price: 199 }, { name: "Code Smells", price: 199 }, { name: "Chess With AI", price: 299 },
-            { name: "Mad Gab", price: 199 }, { name: "Escape Room", price: 199 }, { name: "Spell-Bee", price: 199 },
-            { name: "Literacy Trivia", price: 199 }, { name: "BGMI Tournament", price: 299 },
-            { name: "Stand-Up Comedy & Reel Competition", price: 299 }, { name: "Micro Sport Challenge", price: 199 },
-            { name: "Canvas Arts", price: 199 }, { name: "Tech Hunt", price: 199 }, { name: "Fun Zone", price: 199 },
-            { name: "Retro Arena", price: 199 }, { name: "Tech Chamber", price: 299 }, { name: "Mortal Kombat X", price: 199 },
-            { name: "Lazer Maze", price: 199 }, { name: "COD Tournament", price: 299 }, { name: "ICFAI Premier League", price: 199 },
-            { name: "AI Music Challenge", price: 199 }, { name: "Triathlon", price: 199 }, { name: "Photo Scavenger Hunt", price: 299 },
-            { name: "Campus Bingo", price: 199 }, { name: "BookMark Studio", price: 199 }, { name: "RC Car Racing", price: 299 },
-            { name: "Corn Hole", price: 199 }, { name: "Art Expo Competition", price: 299 }, { name: "Words Of Wonder", price: 199 }
+            { name: "Space Quiz", price: 499 }, { name: "Videography Competition", price: 499 },
+            { name: "Fit Fusion", price: 299 }, { name: "Art Expo Competition", price: 299 },
+            { name: "Aawaz", price: 299 }, { name: "Ritu", price: 499 },
+            { name: "Short Film Competition", price: 499 }, { name: "Reels Making Competition", price: 399 },
+            { name: "Script Writing Competition", price: 299 }, { name: "Escape the Bud-Tech Maze", price: 399 },
+            { name: "Valorant Tournament", price: 499 }, { name: "Call of Duty Mobile", price: 299 },
+            { name: "BGMI", price: 299 }, { name: "Marketing Live", price: 299 },
+            { name: "Photo Contest", price: 499 }, { name: "Photo Scavenger Hunt", price: 399 },
+            { name: "RC Car Racing", price: 299 }, { name: "Acting Competition", price: 299 },
+            { name: "Escape Room", price: 299 }
         ],
         ibs: [
             { name: "Genesis", price: 499 }, { name: "Data Decode – “From Chaos to Clarity”", price: 499 }, { name: "Marketkshetra", price: 499 },
@@ -277,11 +327,15 @@ document.addEventListener("DOMContentLoaded", () => {
             { name: "Tote Bag Painting", price: 399 }, { name: "Chamber of Seven Sins", price: 299 }
         ],
         socialScience: [
-            { name: "Canvas Carnival 2.0", price: 299 }, { name: "Finnovate", price: 399 },
-            { name: "The Profiling Room: Where Behaviour Becomes Evidence", price: 399 }
+            { name: "Vox Populi: Mock Parliament", price: 499 },
+            { name: "Finovate", price: 399 },
+            { name: "The Profiling Room: Where Behaviour Becomes Evidence", price: 399 },
+            { name: "Canvas Carnival 2.0", price: 299 }
         ],
         architecture: [
-            { name: "Crystal Canvas Art", price: 99 }, { name: "Rang De Matka", price: 199 },
+            { name: "Melody Mania", price: 0 },
+            { name: "Crystal Canvas Art", price: 99 },
+            { name: "Rang De Matka", price: 199 },
             { name: "Digital Doodles", price: 199 }
         ]
     };
@@ -422,15 +476,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // ---- File Helpers ----
     const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
-    function readFileAsBase64(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result.split(",")[1]);
-            reader.onerror = (error) => reject(error);
-            reader.readAsDataURL(file);
-        });
-    }
-
     function validateFile(fileInput, statusEl) {
         if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
             if (statusEl) statusEl.innerHTML = "";
@@ -445,61 +490,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (statusEl) statusEl.innerHTML = `<i class="fa-solid fa-circle-check text-success"></i> ${file.name} ready`;
         return file;
-    }
-
-    // ---- Form Submission (iframe method avoids CORS with Google Apps Script) ----
-    async function submitRegistration(payload) {
-        const iframeName = `gas-frame-${Date.now()}`;
-        const iframe = document.createElement("iframe");
-        iframe.name = iframeName;
-        iframe.style.display = "none";
-
-        const form = document.createElement("form");
-        form.method = "POST";
-        form.action = GOOGLE_SCRIPT_URL;
-        form.target = iframeName;
-        form.style.display = "none";
-
-        const fields = {
-            fullName: payload.fullName,
-            mobileNumber: payload.mobileNumber,
-            emailId: payload.emailId,
-            institutionName: payload.institutionName,
-            eventName: payload.eventName,
-            amount: String(payload.amount),
-            aadhaarContent: payload.aadhaarContent || "",
-            aadhaarName: payload.aadhaarName || "",
-            collegeIdContent: payload.collegeIdContent || "",
-            collegeIdName: payload.collegeIdName || ""
-        };
-
-        Object.entries(fields).forEach(([key, value]) => {
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = key;
-            input.value = value;
-            form.appendChild(input);
-        });
-
-        document.body.appendChild(iframe);
-        document.body.appendChild(form);
-        form.submit();
-
-        return new Promise((resolve, reject) => {
-            const timeout = setTimeout(() => {
-                iframe.remove();
-                form.remove();
-                reject(new Error("Submission timed out. Please check your connection and try again."));
-            }, 15000);
-            iframe.onload = () => {
-                clearTimeout(timeout);
-                setTimeout(() => {
-                    iframe.remove();
-                    form.remove();
-                    resolve();
-                }, 500);
-            };
-        });
     }
 
     // ---- Premium Success Popup ----
@@ -603,26 +593,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
                 const totalAmt = selectedEvents.reduce((s, ev) => s + ev.amount, 0);
-                const payload = {
-                    fullName: document.getElementById("centralFullName").value.trim(),
-                    mobileNumber,
-                    emailId: document.getElementById("centralEmail").value.trim(),
-                    institutionName: document.getElementById("centralCollege").value.trim(),
-                    eventName: selectedEvents.map((ev) => `${ev.eventName} (${ev.school})`).join(", "),
-                    amount: totalAmt,
-                };
-                const [aadhaarContent, collegeIdContent] = await Promise.all([
-                    readFileAsBase64(aadhaarFile),
-                    readFileAsBase64(collegeIdFile)
-                ]);
-                payload.aadhaarContent = aadhaarContent;
-                payload.aadhaarName = aadhaarFile.name;
-                payload.collegeIdContent = collegeIdContent;
-                payload.collegeIdName = collegeIdFile.name;
-                await submitRegistration(payload);
                 showSuccessPopup(totalAmt, "index.html");
             } catch (err) {
-                console.error("Registration submission failed:", err);
+                console.error("Registration flow failed:", err);
                 showAlert("Submission failed. Please try again.", "danger");
                 btn.disabled = false;
                 btn.innerHTML = "Submit &amp; Pay";
