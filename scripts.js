@@ -263,6 +263,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // Release focus before aria-hidden is applied to prevent accessibility warning
+    $('#posterModal').on('hide.bs.modal', function () {
+        if (document.activeElement && this.contains(document.activeElement)) {
+            document.activeElement.blur();
+        }
+    });
+
     $('#posterModal').on('hidden.bs.modal', function () {
         var carousel = $(this).find('.carousel');
         if (carousel.length > 0) {
